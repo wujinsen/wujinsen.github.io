@@ -1,0 +1,27 @@
+---
+import I18n from './I18n.astro';
+import { site } from '../data/site';
+---
+
+<section id="contact">
+  <div class="contact-wrap reveal">
+    <h2>
+      <I18n en="Contact" zh="联系" />
+    </h2>
+    <p>
+      <I18n
+        en="Open to senior Java architect and tech lead roles in Beijing, or remote teams with clear backend ownership. Email works best; I send an updated CV on request."
+        zh="开放北京 Senior Java 架构师 / 技术负责人岗位，也接受职责清晰的后端远程团队。请邮件联系，我会按需发送最新简历。"
+      />
+    </p>
+    <div class="contact-actions">
+      <a class="btn-primary" href={`mailto:${site.email}`}>
+        <I18n en="Send email" zh="发送邮件" />
+      </a>
+      <a class="btn-secondary" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn-secondary" href={site.blog} target="_blank" rel="noopener noreferrer">
+        <I18n en="Blog" zh="博客" />
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+---
+import I18n from './I18n.astro';
+import { skillColumns } from '../data/site';
+
+function isI18nItem(item: string | { en: string; zh: string }): item is { en: string; zh: string } {
+  return typeof item === 'object';
+}
+---
+
+<section class="section reveal section-stack" id="stack">
+  <h2 class="section-title">
+    <I18n en="The tools I reach for." zh="我惯用的工具。" />
+  </h2>
+  <p class="section-desc">
+    <I18n
+      en="Curated, not exhaustive. These are technologies I have used in production for substantial periods."
+      zh="精选而非穷举。下列技术我都在生产环境里长期使用过。"
+    />
+  </p>
+  <div class="skills-grid">
+    {
+      skillColumns.map((col) => (
+        <div class="skill-col">
+          <h5>
+            <I18n en={col.title.en} zh={col.title.zh} />
+          </h5>
+          <ul>
+            {col.items.map((item) => (
+              <li>
+                {isI18nItem(item) ? <I18n en={item.en} zh={item.zh} /> : item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>

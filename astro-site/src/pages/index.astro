@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import StatsTrusted from '../components/StatsTrusted.astro';
+import About from '../components/About.astro';
+import Work from '../components/Work.astro';
+import Writing from '../components/Writing.astro';
+import Stack from '../components/Stack.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={site.title.en} description={site.description.en}>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <StatsTrusted />
+    <About />
+    <Work />
+    <Writing />
+    <Stack />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

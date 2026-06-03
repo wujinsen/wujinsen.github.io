@@ -1,0 +1,59 @@
+---
+import I18n from './I18n.astro';
+import { quickFacts } from '../data/site';
+---
+
+<section class="section reveal" id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">
+        <I18n en="About" zh="关于我" />
+      </div>
+      <h2 class="section-title">
+        <I18n
+          en="From monoliths to microservices to data platforms."
+          zh="从单体到微服务，再到数据平台。"
+        />
+      </h2>
+      <p>
+        <I18n
+          en="Based in Beijing with 14 years of Java experience. I have led teams at 马蜂窝, 自如, 阳光金科, and startups, designing high-throughput backend systems and company-wide data infrastructure."
+          zh="现居北京，14 年 Java 经验。曾在马蜂窝、自如、阳光金科及创业公司担任技术负责人，主导高吞吐后端系统与公司级数据基础设施建设。"
+        />
+      </p>
+      <p>
+        <I18n
+        en="I focus on production basics: service boundaries, observability, safe releases, and code the next engineer can change without fear. Essays at wujinsen.github.io/wujinsen-blog."
+        zh="工作重心在生产基础能力：服务边界、可观测性、安全发布，以及后续同事能放心改动的代码。文章见 wujinsen.github.io/wujinsen-blog。"
+        />
+      </p>
+      <p>
+        <I18n
+          en="Currently focused on: Spring Cloud microservices, Flink real-time pipelines, DevOps automation, and platform engineering."
+          zh="目前关注：Spring Cloud 微服务、Flink 实时链路、DevOps 自动化与平台工程。"
+        />
+      </p>
+    </div>
+    <div class="about-card">
+      <h4><I18n en="Quick facts" zh="基本信息" /></h4>
+      <ul>
+        {
+          quickFacts.map((fact) => (
+            <li>
+              <I18n en={fact.key.en} zh={fact.key.zh} />
+              {fact.href ? (
+                <a href={fact.href} target="_blank" rel="noopener noreferrer">
+                  <I18n en={fact.value.en} zh={fact.value.zh} />
+                </a>
+              ) : (
+                <span>
+                  <I18n en={fact.value.en} zh={fact.value.zh} />
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jinsen Wu | Writing &amp; building production-grade Java</title>
+<meta name="description" content="Weekly essays on distributed systems, production stories, and engineering culture. Written by a senior Java engineer in Tokyo." />
+<meta property="og:title" content="Jinsen Wu | Writing &amp; building production-grade Java" />
+<meta property="og:description" content="Weekly essays on distributed systems from a senior Java engineer in Tokyo. 2,400+ subscribers." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://images.unsplash.com/photo-1455390583462-c658a634bf65?w=1200&h=630&fit=crop&q=80" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/500.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/600.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/700.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/500.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/600.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/700.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+    --bg-paper: #f4f4f5;
+    --text: #0a0a0a;
+    --text-muted: #6b7280;
+    --text-soft: #9ca3af;
+    --border: #ececec;
+    --accent: #c1432e;
+    --accent-hover: #a33827;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+    --font: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --display: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  html, body { background: var(--bg); color: var(--text); font-family: var(--font); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  html[lang="zh"] body { font-family: var(--font), 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .display { font-family: var(--display); }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--text); color: #fff; }
+  .skip-link {
+    position: absolute; left: -9999px; top: 12px; z-index: 100;
+    background: var(--text); color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 14px;
+  }
+  .skip-link:focus { left: 12px; }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  /* === Nav === */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.82); backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .logo-mark {
+    width: 28px; height: 28px; border-radius: 6px; background: var(--accent); color: #fff;
+    display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 14px;
+  }
+  .logo .small { color: var(--text-muted); font-weight: 400; font-size: 13px; margin-left: 4px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); font-weight: 500; transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; padding: 3px; background: var(--bg); }
+  .lang-toggle button { background: none; border: none; cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 5px 11px; border-radius: 999px; transition: all .15s; }
+  .lang-toggle button:hover { color: var(--text); }
+  .lang-toggle button.active { background: var(--text); color: #fff; }
+  .lang-toggle button:active { transform: scale(0.96); }
+  .nav-cta { font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 8px; background: var(--text); color: #fff; transition: background .15s; }
+  .nav-cta:hover { background: var(--accent); }
+  .nav-cta:active { transform: scale(0.98); }
+
+  /* === Hero === */
+  .hero { max-width: 1200px; margin: 0 auto; padding: 88px 32px 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+  .hero-quote {
+    font-family: var(--display); font-weight: 500; font-style: italic;
+    font-size: clamp(2.25rem, 4.5vw, 4rem); line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 24px; color: var(--text);
+  }
+  html[lang="zh"] .hero-quote { font-style: normal; font-weight: 600; font-family: var(--font), 'Noto Sans SC', sans-serif; line-height: 1.32; letter-spacing: 0; }
+  .hero-quote .markup { color: var(--accent); font-style: normal; font-weight: 400; }
+  html[lang="zh"] .hero-quote .markup { font-weight: 600; }
+  .hero-byline { font-size: 17px; color: var(--text-muted); line-height: 1.6; max-width: 560px; margin-bottom: 32px; }
+  .hero-byline b { color: var(--text); font-weight: 600; }
+  .hero-photo img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px;
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+  }
+
+  /* Subscribe */
+  .subscribe {
+    display: flex; gap: 0; max-width: 480px;
+    background: var(--bg); border: 1px solid var(--text); border-radius: 10px;
+    overflow: hidden; transition: box-shadow .2s;
+  }
+  .subscribe:focus-within { box-shadow: 0 0 0 4px rgba(193,67,46,0.12); }
+  .subscribe input {
+    flex: 1; border: none; outline: none; padding: 14px 18px;
+    font-family: inherit; font-size: 14px; background: transparent;
+  }
+  .subscribe button {
+    border: none; background: var(--text); color: #fff;
+    padding: 14px 22px; font-family: inherit; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: background .15s, transform .1s;
+  }
+  .subscribe button:hover { background: var(--accent); }
+  .subscribe button:active { transform: scale(0.98); }
+  .subscribe button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .subscribe-meta { font-size: 12px; color: var(--text-soft); margin-top: 12px; max-width: 480px; }
+  .subscribe-meta b { color: var(--text); font-weight: 600; }
+  .form-error { font-size: 12px; color: var(--accent); margin-top: 8px; display: none; }
+  .form-error.visible { display: block; }
+  .form-success { font-size: 13px; color: #166534; margin-top: 8px; display: none; }
+  .form-success.visible { display: block; }
+
+  /* === Stats === */
+  .stats { max-width: 1200px; margin: 0 auto; padding: 0 32px 16px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stat { padding: 28px 24px; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: var(--display); font-size: 40px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+  html[lang="zh"] .stat-label { text-transform: none; letter-spacing: 0; }
+
+  /* === Section === */
+  .section { max-width: 1200px; margin: 0 auto; padding: 88px 32px; }
+  .section-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-eyebrow .line { width: 28px; height: 1px; background: var(--accent); }
+  .section-eyebrow .label { font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }
+  html[lang="zh"] .section-eyebrow .label { letter-spacing: 0.05em; }
+  .section-title { font-family: var(--display); font-size: clamp(1.75rem, 3vw, 2.75rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 14px; max-width: 760px; }
+  html[lang="zh"] .section-title { font-family: var(--font), 'Noto Sans SC', sans-serif; font-weight: 700; letter-spacing: 0; }
+  .section-desc { font-size: 17px; color: var(--text-muted); max-width: 640px; line-height: 1.6; }
+  html[lang="zh"] .section-desc { line-height: 1.8; }
+
+  /* === Featured essay === */
+  .featured {
+    background: var(--bg-paper); border-radius: 24px; padding: 56px; border: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .feat-tag { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+  html[lang="zh"] .feat-tag { letter-spacing: 0.05em; text-transform: none; }
+  .feat-title { font-family: var(--display); font-weight: 500; font-size: clamp(1.5rem, 2.5vw, 2.75rem); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 20px; }
+  html[lang="zh"] .feat-title { font-family: var(--font), 'Noto Sans SC', sans-serif; font-weight: 700; letter-spacing: 0; }
+  .feat-dek { font-size: 17px; color: #374151; line-height: 1.7; margin-bottom: 26px; }
+  html[lang="zh"] .feat-dek { line-height: 1.95; }
+  .feat-byline { font-size: 13px; color: var(--text-muted); display: flex; gap: 16px; flex-wrap: wrap; }
+  .feat-right {
+    background: var(--text); color: #fff; border-radius: 16px; padding: 40px 36px;
+    display: flex; flex-direction: column; gap: 18px; position: relative;
+  }
+  .feat-right::before { content: '"'; position: absolute; top: 12px; left: 22px; font-family: var(--display); font-size: 80px; color: rgba(255,255,255,0.18); line-height: 1; }
+  .feat-pullquote { font-family: var(--display); font-style: italic; font-size: 22px; line-height: 1.5; padding-top: 28px; }
+  html[lang="zh"] .feat-pullquote { font-family: var(--font), 'Noto Sans SC', sans-serif; font-style: normal; line-height: 1.75; font-size: 18px; }
+  .feat-pullquote-attrib { font-size: 12px; color: rgba(255,255,255,0.55); }
+
+  /* === Topics: featured + 2 col === */
+  .topics { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .topic-card {
+    padding: 32px 28px; border: 1px solid var(--border); border-radius: 14px;
+    transition: border-color .2s, transform .2s, box-shadow .2s; cursor: pointer; background: var(--bg);
+  }
+  .topic-card:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .topic-card.featured {
+    grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;
+    background: var(--bg-paper); padding: 40px;
+  }
+  .topic-name { font-size: 19px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .topic-card.featured .topic-name { font-family: var(--display); font-size: 28px; font-weight: 500; }
+  html[lang="zh"] .topic-card.featured .topic-name { font-family: var(--font), 'Noto Sans SC', sans-serif; font-weight: 700; font-size: 24px; }
+  .topic-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+  .topic-meta { font-size: 12px; color: var(--text-soft); font-family: var(--mono); }
+  html[lang="zh"] .topic-meta { font-family: var(--font), 'Noto Sans SC', sans-serif; }
+  .topic-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); }
+
+  /* === Essays list (single column) === */
+  .essay-list { display: flex; flex-direction: column; }
+  .essay {
+    padding: 28px 0 32px; border-top: 1px solid var(--border); cursor: pointer;
+    display: grid; grid-template-columns: 140px 1fr; gap: 32px; align-items: start;
+    transition: padding .2s;
+  }
+  .essay:last-child { border-bottom: 1px solid var(--border); }
+  .essay:hover { padding-left: 8px; }
+  .essay:hover .essay-title { color: var(--accent); }
+  .essay-cat { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+  html[lang="zh"] .essay-cat { letter-spacing: 0.05em; text-transform: none; }
+  .essay-title { font-family: var(--display); font-weight: 500; font-size: 26px; line-height: 1.25; letter-spacing: -0.01em; transition: color .15s; }
+  html[lang="zh"] .essay-title { font-family: var(--font), 'Noto Sans SC', sans-serif; font-weight: 700; line-height: 1.45; font-size: 22px; letter-spacing: 0; }
+  .essay-dek { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 10px; }
+  .essay-meta { font-size: 12px; color: var(--text-soft); margin-top: 14px; font-family: var(--mono); display: flex; gap: 14px; }
+
+  /* === Manifesto (light) === */
+  .manifesto {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 24px;
+    padding: 72px 60px; max-width: 1200px; margin: 0 auto;
+  }
+  .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .manifesto-title { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(1.5rem, 2.5vw, 2.5rem); line-height: 1.25; max-width: 440px; }
+  html[lang="zh"] .manifesto-title { font-family: var(--font), 'Noto Sans SC', sans-serif; font-style: normal; font-weight: 600; line-height: 1.5; }
+  .manifesto-list { display: flex; flex-direction: column; gap: 28px; }
+  .belief h5 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .belief p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+  html[lang="zh"] .belief p { line-height: 1.9; }
+
+  /* === Talks === */
+  .talks { display: flex; flex-direction: column; }
+  .talk { padding: 26px 0; border-top: 1px solid var(--border); display: grid; grid-template-columns: 100px 1fr 200px 30px; gap: 28px; align-items: center; cursor: pointer; }
+  .talk:last-child { border-bottom: 1px solid var(--border); }
+  .talk-date { font-family: var(--mono); font-size: 12px; color: var(--text-soft); }
+  .talk-content h4 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .talk-content .type { font-size: 12px; color: var(--text-muted); }
+  .talk-venue { font-size: 14px; color: var(--text); font-weight: 500; text-align: right; }
+  .talk-venue .city { font-size: 12px; color: var(--text-muted); display: block; }
+  .talk-arrow { color: var(--text-soft); font-size: 18px; text-align: right; transition: transform .15s, color .15s; }
+  .talk:hover .talk-arrow { color: var(--accent); transform: translateX(4px); }
+
+  /* === Press === */
+  .press-strip { background: var(--bg-soft); border-radius: 16px; padding: 36px 40px; border: 1px solid var(--border); }
+  .press-label { font-size: 13px; color: var(--text-soft); margin-bottom: 20px; text-align: center; }
+  .press-logos { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 36px; align-items: center; }
+  .press-logos svg { height: 20px; width: auto; opacity: 0.5; fill: currentColor; color: var(--text); transition: opacity .15s; }
+  .press-logos a:hover svg { opacity: 0.8; }
+
+  /* === Building scroll === */
+  .build-scroll-wrap { margin: 0 -32px; padding: 0 32px; }
+  .build-scroll {
+    display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-bottom: 8px; scrollbar-width: thin;
+  }
+  .build {
+    flex: 0 0 min(300px, 82vw); scroll-snap-align: start;
+    border: 1px solid var(--border); border-radius: 14px; padding: 26px 24px;
+    cursor: pointer; transition: border-color .2s, transform .2s; display: flex; flex-direction: column; background: var(--bg);
+  }
+  .build:hover { border-color: var(--text); transform: translateY(-2px); }
+  .build-thumb { width: 100%; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); }
+  .build-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .build h4 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .build .build-dek { font-size: 13px; color: var(--text-muted); line-height: 1.6; flex: 1; margin-bottom: 14px; }
+  html[lang="zh"] .build .build-dek { line-height: 1.85; }
+  .build-stats { font-size: 12px; color: var(--text-soft); font-family: var(--mono); padding-top: 14px; border-top: 1px solid var(--border); }
+
+  /* === Big Subscribe === */
+  .big-subscribe { background: var(--bg-paper); border-radius: 24px; padding: 88px 56px; text-align: center; margin-top: 64px; border: 1px solid var(--border); }
+  .big-sub-quote { font-family: var(--display); font-style: italic; font-size: clamp(1.25rem, 2.5vw, 1.875rem); line-height: 1.4; max-width: 720px; margin: 0 auto 28px; color: var(--text); }
+  html[lang="zh"] .big-sub-quote { font-family: var(--font), 'Noto Sans SC', sans-serif; font-style: normal; line-height: 1.7; font-weight: 500; }
+  .big-sub-stats { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+  .big-sub-stats b { color: var(--accent); font-weight: 700; }
+  .big-sub-form { max-width: 520px; margin: 0 auto; }
+
+  /* === Footer === */
+  .footer { border-top: 1px solid var(--border); padding: 40px 32px; margin-top: 56px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .footer-left { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
+  .footer-right { display: flex; gap: 24px; font-size: 13px; color: var(--text-muted); }
+  .footer-right a { cursor: pointer; transition: color .15s; }
+  .footer-right a:hover { color: var(--text); }
+  .footer-right a.active { color: var(--text); font-weight: 600; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-photo { max-width: 360px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .featured, .manifesto-grid, .topic-card.featured { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
+    .topics { grid-template-columns: 1fr; }
+    .essay { grid-template-columns: 1fr; gap: 8px; }
+    .talk { grid-template-columns: 1fr; gap: 6px; }
+    .talk-venue { text-align: left; }
+    .talk-arrow { display: none; }
+    .nav-links { display: none; }
+    .manifesto { margin: 0 16px; padding: 48px 28px; }
+    .section { padding: 56px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">W</span>
+      <span data-en="Jinsen Wu" data-zh="吴金森">Jinsen Wu</span>
+      <span class="small" data-en="· Writing &amp; Building" data-zh="· 写作与构建">· Writing &amp; Building</span>
+    </a>
+    <div class="nav-links">
+      <a href="#essays" data-en="Essays" data-zh="文章">Essays</a>
+      <a href="#topics" data-en="Topics" data-zh="主题">Topics</a>
+      <a href="#talks" data-en="Talks" data-zh="演讲">Talks</a>
+      <a href="#building" data-en="Building" data-zh="作品">Building</a>
+      <a href="#about" data-en="About" data-zh="关于">About</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language switcher">
+        <button type="button" data-set-lang="en">EN</button>
+        <button type="button" data-set-lang="zh">中</button>
+      </div>
+      <a href="#subscribe" class="nav-cta" data-en="Subscribe" data-zh="订阅">Subscribe</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<section class="hero reveal">
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-quote display">
+        <span data-en="I write about what production teaches you" data-zh="我在写：生产环境会教给你那些">I write about what production teaches you</span>
+        <span class="markup" data-en="when no one's watching." data-zh="没人在看时，才肯说的事。">when no one's watching.</span>
+      </h1>
+      <p class="hero-byline" data-en="Ten years writing Java for real users in Shanghai, then Tokyo. Weekly essays on distributed systems, read by <b>2,400+</b> engineers. Honest, specific, and never sponsored." data-zh="十年来在真实用户面前写 Java，先在上海，后在东京。每周一篇随笔，聊分布式系统，已有 <b>2,400+</b> 工程师订阅。真诚、具体、零商单。">
+        Ten years writing Java for real users in Shanghai, then Tokyo. Weekly essays on distributed systems, read by <b>2,400+</b> engineers. Honest, specific, and never sponsored.
+      </p>
+      <form class="subscribe" data-subscribe-form onsubmit="return false;">
+        <input type="email" name="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-zh-placeholder="你的邮箱地址" required aria-label="Email" />
+        <button type="submit" data-en="Subscribe (free)" data-zh="免费订阅">Subscribe (free)</button>
+      </form>
+      <p class="form-error" data-form-error data-en="Please enter a valid email address." data-zh="请输入有效的邮箱地址。">Please enter a valid email address.</p>
+      <p class="form-success" data-form-success data-en="You're in. Check your inbox." data-zh="订阅成功，请查收邮件。">You're in. Check your inbox.</p>
+      <div class="subscribe-meta">
+        <span data-en="Weekly · No spam · Unsubscribe anytime · Read by engineers at <b>Stripe, Mercari, ByteDance, LINE</b>" data-zh="周更 · 不打扰 · 随时退订 · 来自 <b>Stripe、Mercari、字节、LINE</b> 的工程师都在订阅">
+          Weekly · No spam · Unsubscribe anytime · Read by engineers at <b>Stripe, Mercari, ByteDance, LINE</b>
+        </span>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1455390583462-c658a634bf65?w=800&h=1000&fit=crop&q=80" alt="Jinsen Wu" width="800" height="1000" loading="eager" />
+    </div>
+  </div>
+</section>
+
+<div class="stats reveal">
+  <div class="stat"><div class="stat-num">2,400+</div><div class="stat-label" data-en="Newsletter subscribers" data-zh="Newsletter 订阅者">Newsletter subscribers</div></div>
+  <div class="stat"><div class="stat-num">42</div><div class="stat-label" data-en="Essays published" data-zh="已发表文章">Essays published</div></div>
+  <div class="stat"><div class="stat-num">5.6k</div><div class="stat-label" data-en="GitHub stars across projects" data-zh="GitHub 累计 Stars">GitHub stars across projects</div></div>
+  <div class="stat"><div class="stat-num">8</div><div class="stat-label" data-en="Conference &amp; podcast talks" data-zh="大会与播客出场">Conference &amp; podcast talks</div></div>
+</div>
+
+<section class="section reveal">
+  <div class="section-eyebrow"><span class="line"></span><span class="label" data-en="Featured essay" data-zh="本期推荐">Featured essay</span></div>
+  <h2 class="section-title" data-en="The piece I'd want you to read first." data-zh="如果只读一篇，我希望你读这篇。">The piece I'd want you to read first.</h2>
+  <div class="featured" style="margin-top: 40px;">
+    <div>
+      <div class="feat-tag" data-en="March 2026 · 14 min read · #java #postmortem" data-zh="2026 年 3 月 · 14 分钟阅读 · #java #复盘">March 2026 · 14 min read · #java #postmortem</div>
+      <h3 class="feat-title display" data-en="Virtual threads in production: 18 months later, what actually broke." data-zh="虚拟线程上生产 18 个月：实际坏过的那些事。">Virtual threads in production: 18 months later, what actually broke.</h3>
+      <p class="feat-dek" data-en="When Project Loom shipped in Java 21, the room celebrated. Eighteen months later, three outages, two architectural u-turns, and one humbled team will tell you what the keynote demos didn't." data-zh="当 Project Loom 在 Java 21 正式发布时，整个房间都在欢呼。十八个月、三次线上事故、两次架构掉头、以及一个被磨平脾气的团队之后，我想告诉你那些 keynote 演示没说的事。">
+        When Project Loom shipped in Java 21, the room celebrated. Eighteen months later, three outages, two architectural u-turns, and one humbled team will tell you what the keynote demos didn't.
+      </p>
+      <div class="feat-byline">
+        <span data-en="12,400 reads" data-zh="阅读 12,400">12,400 reads</span>
+        <span data-en="Hacker News front page" data-zh="HN 首页推荐">Hacker News front page</span>
+        <span>Java Weekly #672</span>
+      </div>
+    </div>
+    <div class="feat-right">
+      <div class="feat-pullquote display" data-en="The hardest part of virtual threads wasn't writing them. It was the day a senior engineer asked: 'so… where do my breakpoints go?'" data-zh="虚拟线程真正难的不是写。而是某个高级工程师走过来问我：「这……我的断点都跑哪去了？」那一天。">
+        The hardest part of virtual threads wasn't writing them. It was the day a senior engineer asked: "so… where do my breakpoints go?"
+      </div>
+      <div class="feat-pullquote-attrib" data-en="from the essay" data-zh="摘自本文">from the essay</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="topics" style="padding-top: 0;">
+  <h2 class="section-title" data-en="Three recurring threads, woven across 42 essays." data-zh="四十二篇文章里，一直在写的三条线。">Three recurring threads, woven across 42 essays.</h2>
+  <div class="topics" style="margin-top: 48px;">
+    <div class="topic-card featured">
+      <div>
+        <h3 class="topic-name" data-en="Distributed systems, honestly." data-zh="分布式系统，老实说。">Distributed systems, honestly.</h3>
+        <p class="topic-desc" data-en="Trade-offs, postmortems, and the parts of CAP that don't fit in a slide. Written from production, not whiteboards." data-zh="权衡、复盘、以及 CAP 定理里 PPT 装不下的部分。写于生产环境，而非白板。">Trade-offs, postmortems, and the parts of CAP that don't fit in a slide. Written from production, not whiteboards.</p>
+        <span class="topic-meta" data-en="18 essays" data-zh="18 篇文章">18 essays</span>
+      </div>
+      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=640&h=400&fit=crop&q=80" alt="" width="640" height="400" loading="lazy" />
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-name" data-en="Production stories." data-zh="来自生产环境的故事。">Production stories.</h3>
+      <p class="topic-desc" data-en="Real incidents, real fixes, real shame. The kinds of stories you only get to tell after the Slack channel quiets down." data-zh="真实的事故、真实的修复、真实的难堪。是那种 Slack 频道终于安静下来之后才敢讲的故事。">Real incidents, real fixes, real shame. The kinds of stories you only get to tell after the Slack channel quiets down.</p>
+      <span class="topic-meta" data-en="12 essays" data-zh="12 篇文章">12 essays</span>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-name" data-en="Working across cultures." data-zh="跨文化工作。">Working across cultures.</h3>
+      <p class="topic-desc" data-en="What ten years of writing Java between Shanghai and Tokyo teaches you about systems, hierarchy, and code review." data-zh="十年在上海和东京之间写 Java，教给我关于系统、关于阶层、以及关于代码评审的事。">What ten years of writing Java between Shanghai and Tokyo teaches you about systems, hierarchy, and code review.</p>
+      <span class="topic-meta" data-en="8 essays" data-zh="8 篇文章">8 essays</span>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="essays" style="padding-top: 0;">
+  <h2 class="section-title" data-en="Recent essays." data-zh="近期的几篇随笔。">Recent essays.</h2>
+  <div class="essay-list" style="margin-top: 48px;">
+    <a class="essay" href="#">
+      <div class="essay-meta"><span>2026 · 02 · 04</span><span>11 min</span><span>8.2k reads</span></div>
+      <div>
+        <div class="essay-cat" data-en="Architecture" data-zh="架构">Architecture</div>
+        <h3 class="essay-title display" data-en="Designing idempotency keys for payment systems at Japanese scale" data-zh="为日本规模的支付系统设计幂等键">Designing idempotency keys for payment systems at Japanese scale</h3>
+        <p class="essay-dek" data-en="A practical walkthrough of how we settled on a hybrid SHA-256 + business key scheme that survived three Black Friday seasons in a row." data-zh="实战还原我们如何最终选定 SHA-256 + 业务键的混合方案，扛过三个连续的双十一级别流量峰值。">A practical walkthrough of how we settled on a hybrid SHA-256 + business key scheme that survived three Black Friday seasons in a row.</p>
+      </div>
+    </a>
+    <a class="essay" href="#">
+      <div class="essay-meta"><span>2026 · 01 · 21</span><span>8 min</span><span>5.6k reads</span></div>
+      <div>
+        <div class="essay-cat" data-en="Postmortem" data-zh="复盘">Postmortem</div>
+        <h3 class="essay-title display" data-en="Why we moved from Spring Cloud Gateway back to Nginx (and back again)" data-zh="我们从 Spring Cloud Gateway 切回 Nginx，然后又切回来">Why we moved from Spring Cloud Gateway back to Nginx (and back again)</h3>
+        <p class="essay-dek" data-en="A two-year saga of an infrastructure pendulum, told with the regret it deserves. Featuring at least one decision I'd undo." data-zh="一段长达两年的基础设施钟摆故事，带着应有的悔意来讲。其中至少有一个决定，今天我会重做。">A two-year saga of an infrastructure pendulum, told with the regret it deserves. Featuring at least one decision I'd undo.</p>
+      </div>
+    </a>
+    <a class="essay" href="#">
+      <div class="essay-meta"><span>2025 · 12 · 02</span><span>17 min</span><span>4.1k reads</span></div>
+      <div>
+        <div class="essay-cat" data-en="Observability" data-zh="可观测性">Observability</div>
+        <h3 class="essay-title display" data-en="A practical guide to OpenTelemetry tracing in a polyglot stack" data-zh="多语言技术栈中 OpenTelemetry 链路追踪实战指南">A practical guide to OpenTelemetry tracing in a polyglot stack</h3>
+        <p class="essay-dek" data-en="Sampling, head-vs-tail, OTLP gotchas, and the one config flag that doubled our Datadog bill until we noticed." data-zh="采样、头采尾采、OTLP 暗坑，以及那个让我们 Datadog 账单翻倍而我们半个月才发现的配置项。">Sampling, head-vs-tail, OTLP gotchas, and the one config flag that doubled our Datadog bill until we noticed.</p>
+      </div>
+    </a>
+    <a class="essay" href="#">
+      <div class="essay-meta"><span>2025 · 11 · 14</span><span>9 min</span><span>3.8k reads</span></div>
+      <div>
+        <div class="essay-cat" data-en="Career" data-zh="职业">Career</div>
+        <h3 class="essay-title display" data-en="Ten years of writing Java in two countries. What stayed, what didn't." data-zh="在两个国家写了十年 Java。什么留下来，什么没有。">Ten years of writing Java in two countries. What stayed, what didn't.</h3>
+        <p class="essay-dek" data-en="A reflective piece on language, hierarchy, and the strange specific way engineering culture transplants between Shanghai and Tokyo." data-zh="一篇反思性的文字，关于语言、关于阶层、关于工程文化在上海与东京之间的奇异移植。">A reflective piece on language, hierarchy, and the strange specific way engineering culture transplants between Shanghai and Tokyo.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section style="padding: 24px 32px 88px;" class="reveal">
+  <div class="manifesto">
+    <h2 class="manifesto-title display" data-en="Three quiet convictions that show up in everything I write and ship." data-zh="三件我安静地相信的事。它们出现在我写的每一篇文章，和每一行代码里。">
+      Three quiet convictions that show up in everything I write and ship.
+    </h2>
+    <div class="manifesto-grid" style="margin-top: 40px;">
+      <div></div>
+      <div class="manifesto-list">
+        <div class="belief">
+          <h5 data-en="Boring beats clever, in production." data-zh="生产环境里，无聊总是赢过聪明。">Boring beats clever, in production.</h5>
+          <p data-en="A system that anyone can confidently change at 3 a.m. is more valuable than one that wins a Twitter thread." data-zh="一个让所有人凌晨三点都能放心修改的系统，比一个能在推特上引爆讨论的系统更有价值。">A system that anyone can confidently change at 3 a.m. is more valuable than one that wins a Twitter thread.</p>
+        </div>
+        <div class="belief">
+          <h5 data-en="Specifics over essays." data-zh="比起总结，我更信任细节。">Specifics over essays.</h5>
+          <p data-en="I'll always pick one detailed war story over ten general best-practices posts. The detail is where the truth lives." data-zh="我宁愿读一篇细节翔实的战记，也不要十篇泛泛而谈的最佳实践。真相只活在细节里。">I'll always pick one detailed war story over ten general best-practices posts. The detail is where the truth lives.</p>
+        </div>
+        <div class="belief">
+          <h5 data-en="Engineering is a culture, not a stack." data-zh="工程是一种文化，不是技术栈。">Engineering is a culture, not a stack.</h5>
+          <p data-en="The same Spring Boot project means very different things in a Shanghai team and a Tokyo team. The code is the smaller half." data-zh="同一个 Spring Boot 项目在上海团队和东京团队里，是完全不同的两件事。代码只是其中比较小的那一半。">The same Spring Boot project means very different things in a Shanghai team and a Tokyo team. The code is the smaller half.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="talks" style="padding-top: 24px;">
+  <h2 class="section-title" data-en="Where I've been invited to think out loud." data-zh="那些让我大声把想法说出来的地方。">Where I've been invited to think out loud.</h2>
+  <div class="talks" style="margin-top: 40px;">
+    <a class="talk" href="#">
+      <span class="talk-date">2026 · 04</span>
+      <div class="talk-content">
+        <h4 data-en="Loom in production: the talk I wish I'd seen first" data-zh="生产环境里的 Loom：我希望自己当年先听到的那场">Loom in production: the talk I wish I'd seen first</h4>
+        <span class="type" data-en="Conference keynote · 45 min" data-zh="大会主题演讲 · 45 分钟">Conference keynote · 45 min</span>
+      </div>
+      <div class="talk-venue">JavaLand 2026<span class="city" data-en="Brühl, Germany" data-zh="德国 · 布吕尔">Brühl, Germany</span></div>
+      <span class="talk-arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="talk" href="#">
+      <span class="talk-date">2025 · 11</span>
+      <div class="talk-content">
+        <h4 data-en="Designing idempotency you can actually debug" data-zh="设计能被实际调试的幂等性">Designing idempotency you can actually debug</h4>
+        <span class="type" data-en="Conference talk · 30 min" data-zh="大会演讲 · 30 分钟">Conference talk · 30 min</span>
+      </div>
+      <div class="talk-venue">JJUG CCC Fall<span class="city" data-en="Tokyo, Japan" data-zh="日本 · 东京">Tokyo, Japan</span></div>
+      <span class="talk-arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="talk" href="#">
+      <span class="talk-date">2025 · 08</span>
+      <div class="talk-content">
+        <h4 data-en="The quiet decade: what 10 years of Java looks like from Asia" data-zh="安静的十年：从亚洲回望的 Java 十年">The quiet decade: what 10 years of Java looks like from Asia</h4>
+        <span class="type" data-en="Podcast · 62 min" data-zh="播客 · 62 分钟">Podcast · 62 min</span>
+      </div>
+      <div class="talk-venue">The Changelog<span class="city" data-en="Remote" data-zh="远程录制">Remote</span></div>
+      <span class="talk-arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="talk" href="#">
+      <span class="talk-date">2025 · 05</span>
+      <div class="talk-content">
+        <h4 data-en="Engineering culture across the East China Sea" data-zh="跨越东海的工程文化">Engineering culture across the East China Sea</h4>
+        <span class="type" data-en="Fireside chat · 50 min" data-zh="炉边谈话 · 50 分钟">Fireside chat · 50 min</span>
+      </div>
+      <div class="talk-venue">QCon Shanghai<span class="city" data-en="Shanghai, China" data-zh="中国 · 上海">Shanghai, China</span></div>
+      <span class="talk-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="section reveal" style="padding-top: 0;">
+  <div class="press-strip">
+    <div class="press-label" data-en="Featured in" data-zh="被这些媒体引用过">Featured in</div>
+    <div class="press-logos">
+      <a href="#" aria-label="Hacker News"><svg viewBox="0 0 24 24"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.984 4.116-7.984H18.9l-5.893 10.968L18.9 24h-2.773l-4.114-7.616L8.099 24H5.324l5.887-10.968L5.324 5.896h1.627z"/></svg></a>
+      <a href="#" aria-label="InfoQ"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.5 17.25h-3v-1.5h3v1.5zm0-3.75h-3V6h3v7.5z"/></svg></a>
+      <a href="#" aria-label="dev.to"><svg viewBox="0 0 24 24"><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6v3.68h.57c.38 0 .66-.08.84-.23.18-.16.27-.38.27-.68 0-.28-.09-.5-.26-.54zm5.78 2.28c-.18-.16-.46-.23-.84-.23h-.58v3.68h.58c.38 0 .66-.08.84-.23.18-.16.27-.38.27-.68 0-.28-.09-.5-.26-.54zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.01 4.744c.688 0 1.32.088 1.871.264a4.137 4.137 0 011.523 1.027 4.7 4.7 0 011.027 1.523c.264.551.396 1.183.396 1.871 0 .688-.132 1.32-.396 1.871a4.7 4.7 0 01-1.027 1.523 4.137 4.137 0 01-1.523 1.027c-.551.264-1.183.396-1.871.396H8.989c-.688 0-1.32-.132-1.871-.396a4.137 4.137 0 01-1.523-1.027 4.7 4.7 0 01-1.027-1.523A5.002 5.002 0 014.572 12c0-.688.132-1.32.396-1.871a4.7 4.7 0 011.027-1.523 4.137 4.137 0 011.523-1.027c.551-.264 1.183-.396 1.871-.396h8.021z"/></svg></a>
+      <a href="#" aria-label="掘金"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="building" style="padding-top: 24px;">
+  <h2 class="section-title" data-en="Side projects that feed the writing." data-zh="为写作提供素材的 side projects。">Side projects that feed the writing.</h2>
+  <p class="section-desc" data-en="Small products kept alive on nights and weekends, each one the textbook for something I later wrote about." data-zh="几个在夜晚和周末活下来的小产品。每一个，都是后来某篇文章的教材。">Small products kept alive on nights and weekends, each one the textbook for something I later wrote about.</p>
+  <div class="build-scroll-wrap" style="margin-top: 40px;">
+    <div class="build-scroll">
+      <a class="build" href="#">
+        <div class="build-thumb"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=225&fit=crop&q=80" alt="LedgerKit" width="400" height="225" loading="lazy" /></div>
+        <h4>LedgerKit</h4>
+        <p class="build-dek" data-en="An open-source double-entry accounting engine for SaaS startups. Used by 30+ teams in production." data-zh="面向 SaaS 创业团队的开源复式记账引擎，已在 30+ 团队的生产环境运行。">An open-source double-entry accounting engine for SaaS startups. Used by 30+ teams in production.</p>
+        <div class="build-stats">2.1k stars · 1.2k MAU · Java 21</div>
+      </a>
+      <a class="build" href="#">
+        <div class="build-thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop&q=80" alt="FlowDeck" width="400" height="225" loading="lazy" /></div>
+        <h4>FlowDeck</h4>
+        <p class="build-dek" data-en="Self-hosted internal dashboard builder. Two Tokyo startups pay me to keep it running." data-zh="自部署内部看板生成器。东京两家创业公司付费让我继续维护它。">Self-hosted internal dashboard builder. Two Tokyo startups pay me to keep it running.</p>
+        <div class="build-stats">revenue · 12k queries/d · Spring Cloud</div>
+      </a>
+      <a class="build" href="#">
+        <div class="build-thumb"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=225&fit=crop&q=80" alt="NotaJP" width="400" height="225" loading="lazy" /></div>
+        <h4>NotaJP</h4>
+        <p class="build-dek" data-en="JLPT vocabulary trainer. Built it to learn Japanese myself. Somehow it helped 8.5k other foreigners too." data-zh="JLPT 日语单词训练 App。本来是为自学日语做的，结果意外帮到了 8500 个外国人。">JLPT vocabulary trainer. Built it to learn Japanese myself. Somehow it helped 8.5k other foreigners too.</p>
+        <div class="build-stats">8.5k users · 4.8★ · Quarkus</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="subscribe">
+  <div class="big-subscribe reveal">
+    <p class="big-sub-quote display" data-en="If any of this sounded like the kind of voice you'd read on a Sunday morning, drop your email below." data-zh="如果以上任何一段，听起来像是你愿意在周日早上读的那种声音，把邮箱留在下面就好。">
+      If any of this sounded like the kind of voice you'd read on a Sunday morning, drop your email below.
+    </p>
+    <div class="big-sub-stats" data-en="<b>2,400+</b> engineers from <b>Stripe · Mercari · ByteDance · LINE · DeepMind</b> already do." data-zh="已经有来自 <b>Stripe · Mercari · 字节 · LINE · DeepMind</b> 的 <b>2,400+</b> 工程师订阅了。">
+      <b>2,400+</b> engineers from <b>Stripe · Mercari · ByteDance · LINE · DeepMind</b> already do.
+    </div>
+    <form class="big-sub-form subscribe" data-subscribe-form onsubmit="return false;">
+      <input type="email" name="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-zh-placeholder="你的邮箱地址" required aria-label="Email" />
+      <button type="submit" data-en="Subscribe (free)" data-zh="免费订阅">Subscribe (free)</button>
+    </form>
+    <p class="form-error" data-form-error data-en="Please enter a valid email address." data-zh="请输入有效的邮箱地址。">Please enter a valid email address.</p>
+    <p class="form-success" data-form-success data-en="You're in. Check your inbox." data-zh="订阅成功，请查收邮件。">You're in. Check your inbox.</p>
+  </div>
+</section>
+
+<section class="section reveal" id="about">
+  <h2 class="section-title" data-en="A one-paragraph bio, if you've made it this far." data-zh="读到这里，给你一段最简短的自我介绍。">A one-paragraph bio, if you've made it this far.</h2>
+  <p class="section-desc display" style="font-style: italic; font-size: 22px; line-height: 1.55; color: #374151; margin-top: 24px;" data-en="Jinsen Wu writes Java for a living and writes about Java on weekends. He's spent ten years shipping production backends, first at a Shanghai unicorn, now at a quietly important payment company in Tokyo. He believes most of engineering is patience disguised as cleverness, and that the best essays are written in the morning before Slack opens." data-zh="吴金森，工作日写 Java 谋生，周末写 Java 谋兴趣。十年时间一直在交付生产级后端，先是在上海一家独角兽，如今在东京一家低调但要紧的支付公司。他相信工程的大部分，是耐心伪装成的聪明；而最好的文字，写于早晨 Slack 打开之前。">
+    Jinsen Wu writes Java for a living and writes about Java on weekends. He's spent ten years shipping production backends, first at a Shanghai unicorn, now at a quietly important payment company in Tokyo. He believes most of engineering is patience disguised as cleverness, and that the best essays are written in the morning before Slack opens.
+  </p>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="logo-mark" style="width: 22px; height: 22px; font-size: 11px;">W</span>
+      <span data-en="© 2026 Jinsen Wu · Written in Tokyo · No tracking, no ads" data-zh="© 2026 吴金森 · 于东京书写 · 无追踪、无广告">© 2026 Jinsen Wu · Written in Tokyo · No tracking, no ads</span>
+    </div>
+    <div class="footer-right">
+      <a href="#">RSS</a>
+      <a href="#">Twitter</a>
+      <a href="#">GitHub</a>
+      <a data-set-lang="en">English</a>
+      <a data-set-lang="zh">中文</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var SUPPORTED = ['en', 'zh'];
+  var TITLES = {
+    en: 'Jinsen Wu | Writing & building production-grade Java',
+    zh: '吴金森 | 写作 & 构建生产级 Java 系统'
+  };
+
+  function setLang(lang) {
+    if (SUPPORTED.indexOf(lang) === -1) lang = 'en';
+    document.documentElement.setAttribute('lang', lang);
+    document.title = TITLES[lang];
+    var nodes = document.querySelectorAll('[data-en]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      var value = el.getAttribute('data-' + lang);
+      if (value === null) continue;
+      if (value.indexOf('<') !== -1) el.innerHTML = value;
+      else el.textContent = value;
+    }
+    var phNodes = document.querySelectorAll('[data-en-placeholder]');
+    for (var k = 0; k < phNodes.length; k++) {
+      var p = phNodes[k].getAttribute('data-' + lang + '-placeholder');
+      if (p !== null) phNodes[k].setAttribute('placeholder', p);
+    }
+    var setters = document.querySelectorAll('[data-set-lang]');
+    for (var j = 0; j < setters.length; j++) {
+      if (setters[j].getAttribute('data-set-lang') === lang) setters[j].classList.add('active');
+      else setters[j].classList.remove('active');
+    }
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+  }
+
+  function detectInitial() {
+    try { var p = new URLSearchParams(location.search).get('lang'); if (p && SUPPORTED.indexOf(p) !== -1) return p; } catch (e) {}
+    try { var s = localStorage.getItem('lang'); if (s && SUPPORTED.indexOf(s) !== -1) return s; } catch (e) {}
+    var n = (navigator.language || '').toLowerCase();
+    if (n.indexOf('zh') === 0) return 'zh';
+    return 'en';
+  }
+
+  function initSubscribe() {
+    var forms = document.querySelectorAll('[data-subscribe-form]');
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = this;
+        var input = form.querySelector('input[type="email"]');
+        var btn = form.querySelector('button[type="submit"]');
+        var wrap = form.parentElement;
+        var err = wrap.querySelector('[data-form-error]');
+        var ok = wrap.querySelector('[data-form-success]');
+        var val = (input.value || '').trim();
+        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        if (err) err.classList.remove('visible');
+        if (ok) ok.classList.remove('visible');
+        if (!valid) {
+          if (err) err.classList.add('visible');
+          input.focus();
+          return;
+        }
+        btn.disabled = true;
+        setTimeout(function() {
+          btn.disabled = false;
+          input.value = '';
+          if (ok) ok.classList.add('visible');
+        }, 400);
+      });
+    }
+  }
+
+  function initReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < els.length; i++) els[i].classList.add('visible');
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    for (var j = 0; j < els.length; j++) io.observe(els[j]);
+  }
+
+  function init() {
+    var setters = document.querySelectorAll('[data-set-lang]');
+    for (var i = 0; i < setters.length; i++) {
+      setters[i].addEventListener('click', function(e) { e.preventDefault(); setLang(this.getAttribute('data-set-lang')); });
+    }
+    setLang(detectInitial());
+    initSubscribe();
+    initReveal();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
+</body>
+</html>

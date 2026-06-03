@@ -1,0 +1,59 @@
+---
+import I18n from './I18n.astro';
+import { products } from '../data/site';
+---
+
+<section class="section reveal section-tight-top" id="work">
+  <div class="section-head">
+    <h2 class="section-title">
+      <I18n
+        en="Projects I designed, built, and still maintain."
+        zh="由我设计、开发，并仍在持续维护的项目。"
+      />
+    </h2>
+    <p class="section-desc">
+      <I18n
+        en="Selected production work from recent roles: architecture calls, team leadership, and systems still running."
+        zh="来自近年工作的生产项目：架构决策、带队交付、以及仍在运行的系统。"
+      />
+    </p>
+  </div>
+  <div class="products-list">
+    {
+      products.map((product) => (
+        <a class:list={['product-row', { reverse: product.reverse }]} href={product.href}>
+          <div class="product-thumb">
+            {product.image ? (
+              <img
+                src={product.image}
+                alt={product.imageAlt}
+                width="560"
+                height="350"
+                loading="lazy"
+              />
+            ) : (
+              <div class="product-mark" aria-hidden="true">{product.name.slice(0, 1)}</div>
+            )}
+          </div>
+          <div class="product-body">
+            <h3>{product.name}</h3>
+            <div class="product-meta">
+              <I18n en={product.meta.en} zh={product.meta.zh} />
+            </div>
+            <p>
+              <I18n en={product.description.en} zh={product.description.zh} />
+            </p>
+            <div class="product-tech">
+              {product.tech.map((tech) => (
+                <span class="tech-pill">{tech}</span>
+              ))}
+            </div>
+            <span class="product-link">
+              <I18n en="View case study" zh="查看案例" />
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>

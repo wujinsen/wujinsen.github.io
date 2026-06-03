@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jinsen Wu | Senior Java Engineer · Tokyo</title>
+<meta name="description" content="Senior Java engineer in Tokyo. 10+ years building distributed systems for e-commerce, fintech and SaaS. Available for Senior / Staff roles." />
+<meta property="og:title" content="Jinsen Wu | Senior Java Engineer · Tokyo" />
+<meta property="og:description" content="Senior Java engineer in Tokyo. Distributed systems, microservices, cloud-native infrastructure." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=630&fit=crop&q=80" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/500.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/600.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.2.5/700.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/500.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/500.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/600.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/700.css" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+    --bg-card: #ffffff;
+    --text: #0a0a0a;
+    --text-muted: #6b7280;
+    --text-soft: #9ca3af;
+    --border: #ececec;
+    --accent: #0a0a0a;
+    --accent-hover: #333333;
+    --radius: 10px;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+    --font: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  html, body { background: var(--bg); color: var(--text); font-family: var(--font); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  html[lang="zh"] body { font-family: var(--font), 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3, html[lang="zh"] h4 { letter-spacing: -0.01em; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: #111; color: #fff; }
+  .skip-link {
+    position: absolute; left: -9999px; top: 12px; z-index: 100;
+    background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 14px;
+  }
+  .skip-link:focus { left: 12px; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  /* === Nav === */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 18px 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .logo { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 26px; height: 26px; border-radius: 7px; background: var(--accent); color: #fff;
+    display: grid; place-items: center; font-size: 12px; font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); font-weight: 500; transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .lang-toggle {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px; background: var(--bg);
+  }
+  .lang-toggle button {
+    background: transparent; border: none; cursor: pointer;
+    font-family: inherit; font-size: 12px; font-weight: 500; color: var(--text-muted);
+    padding: 5px 11px; border-radius: 999px; transition: all .15s; letter-spacing: 0.02em;
+  }
+  .lang-toggle button:hover { color: var(--text); }
+  .lang-toggle button.active { background: var(--accent); color: #fff; }
+  .lang-toggle button:active { transform: scale(0.96); }
+  .nav-cta {
+    font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 8px;
+    background: var(--accent); color: #fff; transition: background .15s;
+  }
+  .nav-cta:hover { background: var(--accent-hover); }
+  .nav-cta:active { transform: scale(0.98); }
+
+  /* === Hero split === */
+  .hero { max-width: 1200px; margin: 0 auto; padding: 72px 32px 64px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center; }
+  .hero-tag {
+    display: inline-block; font-size: 12px; font-weight: 500; color: var(--text-muted);
+    border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(2.25rem, 4.5vw, 3.75rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.035em;
+    max-width: 640px; margin-bottom: 20px;
+  }
+  html[lang="zh"] .hero h1 { line-height: 1.18; letter-spacing: -0.01em; }
+  .hero h1 .accent { color: var(--text-muted); font-weight: 500; }
+  .hero p { font-size: 18px; color: var(--text-muted); max-width: 540px; line-height: 1.55; }
+  html[lang="zh"] .hero p { line-height: 1.8; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+  .hero-visual { position: relative; }
+  .hero-visual img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px;
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+  }
+  .hero-visual::after {
+    content: ''; position: absolute; inset: 12px -12px -12px 12px; border: 1px solid var(--border);
+    border-radius: 16px; z-index: -1;
+  }
+
+  .btn-primary {
+    background: var(--accent); color: #fff; font-weight: 500; font-size: 14px;
+    padding: 11px 20px; border-radius: 8px; transition: background .15s, transform .1s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-secondary {
+    background: transparent; color: var(--text); font-weight: 500; font-size: 14px;
+    padding: 11px 20px; border-radius: 8px; border: 1px solid var(--border);
+    transition: all .15s;
+  }
+  .btn-secondary:hover { background: var(--bg-soft); border-color: var(--text); }
+  .btn-secondary:active { transform: scale(0.98); }
+
+  /* === Stats === */
+  .stats {
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .stat { padding: 32px 28px; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-size: 36px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+  /* === Trusted === */
+  .trusted { max-width: 1200px; margin: 0 auto; padding: 48px 32px 16px; text-align: center; }
+  .trusted p { font-size: 13px; color: var(--text-soft); margin-bottom: 24px; }
+  .trusted-logos {
+    display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;
+  }
+  .trusted-logos svg { height: 22px; width: auto; opacity: 0.45; fill: currentColor; color: var(--text); transition: opacity .15s; }
+  .trusted-logos a:hover svg { opacity: 0.75; }
+
+  /* === Section === */
+  .section { max-width: 1200px; margin: 0 auto; padding: 88px 32px; }
+  .section-head { margin-bottom: 48px; max-width: 720px; }
+  .section-label {
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  html[lang="zh"] .section-label { letter-spacing: 0.05em; }
+  .section-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px;
+  }
+  html[lang="zh"] .section-title { letter-spacing: 0; line-height: 1.35; }
+  .section-desc { font-size: 17px; color: var(--text-muted); line-height: 1.55; }
+  html[lang="zh"] .section-desc { line-height: 1.8; }
+
+  /* === About === */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
+  .about-grid p { font-size: 16px; color: #374151; margin-bottom: 18px; line-height: 1.7; }
+  html[lang="zh"] .about-grid p { line-height: 1.95; }
+  .about-card {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 14px; padding: 28px;
+  }
+  .about-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+  .about-card ul { list-style: none; }
+  .about-card li {
+    font-size: 14px; padding: 10px 0; color: #374151;
+    display: flex; justify-content: space-between; border-bottom: 1px solid var(--border);
+  }
+  .about-card li:last-child { border-bottom: none; }
+  .about-card li span:last-child { color: var(--text-muted); font-family: var(--mono); font-size: 12px; }
+  html[lang="zh"] .about-card li span:last-child { font-family: var(--font), 'Noto Sans SC', sans-serif; font-size: 13px; }
+
+  /* === Products zig-zag === */
+  .products-list { display: flex; flex-direction: column; gap: 32px; }
+  .product-row {
+    display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center;
+    border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+    transition: border-color .2s, box-shadow .2s, transform .2s; cursor: pointer;
+  }
+  .product-row:hover { border-color: #1a1a1a; box-shadow: var(--shadow); transform: translateY(-2px); }
+  .product-row.reverse { grid-template-columns: 1fr 280px; }
+  .product-row.reverse .product-thumb { order: 2; }
+  .product-row.reverse .product-body { order: 1; }
+  .product-thumb {
+    width: 100%; aspect-ratio: 16/10; border-radius: 10px; overflow: hidden; background: var(--bg-soft);
+    border: 1px solid var(--border);
+  }
+  .product-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product-body h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .product-body .product-meta { font-size: 12px; color: var(--text-soft); margin-bottom: 12px; font-family: var(--mono); }
+  html[lang="zh"] .product-body .product-meta { font-family: var(--font), 'Noto Sans SC', sans-serif; font-size: 13px; }
+  .product-body p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+  html[lang="zh"] .product-body p { line-height: 1.85; }
+  .product-tech { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tech-pill { font-size: 11px; padding: 4px 8px; background: var(--bg-soft); border-radius: 4px; color: #374151; font-weight: 500; }
+  .product-link { font-size: 13px; font-weight: 500; color: var(--text); }
+
+  /* === Blog === */
+  .blog-list { display: flex; flex-direction: column; }
+  .blog-item {
+    display: grid; grid-template-columns: 120px 1fr auto; gap: 32px; align-items: center;
+    padding: 24px 0; border-top: 1px solid var(--border); cursor: pointer; transition: padding .2s;
+  }
+  .blog-item:last-child { border-bottom: 1px solid var(--border); }
+  .blog-item:hover { padding-left: 12px; }
+  .blog-date { font-size: 12px; color: var(--text-soft); font-family: var(--mono); }
+  .blog-title { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+  html[lang="zh"] .blog-title { letter-spacing: 0; }
+  .blog-cat { font-size: 11px; color: var(--text-muted); border: 1px solid var(--border); padding: 4px 10px; border-radius: 999px; }
+
+  /* === Skills (light) === */
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 40px; }
+  .skill-col h5 { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+  html[lang="zh"] .skill-col h5 { text-transform: none; letter-spacing: 0.02em; font-size: 14px; }
+  .skill-col ul { list-style: none; }
+  .skill-col li { font-size: 14px; padding: 7px 0; color: #374151; font-weight: 400; border-bottom: 1px solid var(--border); }
+  .skill-col li:last-child { border-bottom: none; }
+
+  /* === Contact === */
+  .contact-wrap { text-align: center; padding: 100px 32px; max-width: 800px; margin: 0 auto; }
+  .contact-wrap h2 { font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 20px; }
+  html[lang="zh"] .contact-wrap h2 { letter-spacing: 0; line-height: 1.3; }
+  .contact-wrap p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+  html[lang="zh"] .contact-wrap p { line-height: 1.85; }
+  .contact-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* === Footer === */
+  .footer { border-top: 1px solid var(--border); padding: 40px 32px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .footer-left { font-size: 13px; color: var(--text-muted); }
+  .footer-right { display: flex; gap: 24px; font-size: 13px; color: var(--text-muted); }
+  .footer-right a { cursor: pointer; transition: color .15s; }
+  .footer-right a:hover { color: var(--text); }
+  .footer-right a.active { color: var(--text); font-weight: 600; }
+
+  /* === Scroll reveal === */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { max-width: 420px; }
+    .hero-visual::after { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .about-grid, .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+    .product-row, .product-row.reverse { grid-template-columns: 1fr; }
+    .product-row.reverse .product-thumb, .product-row.reverse .product-body { order: unset; }
+    .nav-links, .nav-cta { display: none; }
+    .blog-item { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">W</span> <span data-en="Jinsen Wu" data-zh="吴金森">Jinsen Wu</span></a>
+    <div class="nav-links">
+      <a href="#about" data-en="About" data-zh="关于">About</a>
+      <a href="#work" data-en="Work" data-zh="作品">Work</a>
+      <a href="#writing" data-en="Writing" data-zh="文章">Writing</a>
+      <a href="#stack" data-en="Stack" data-zh="技术栈">Stack</a>
+      <a href="#contact" data-en="Contact" data-zh="联系">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language switcher">
+        <button type="button" data-set-lang="en">EN</button>
+        <button type="button" data-set-lang="zh">中</button>
+      </div>
+      <a href="#contact" class="nav-cta" data-en="Get in touch" data-zh="联系我">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<section class="hero reveal">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="hero-tag">
+        <span data-en="Available for new opportunities · Tokyo / Remote (EU & US friendly)" data-zh="正在寻找新机会 · 东京 / 全远程（欧美时区友好）">Available for new opportunities · Tokyo / Remote (EU &amp; US friendly)</span>
+      </div>
+      <h1>
+        <span data-en="Senior Java Engineer " data-zh="资深 Java 工程师，">Senior Java Engineer </span><span class="accent" data-en="building distributed systems that scale to millions." data-zh="构建可扩展至百万级用户的分布式系统。">building distributed systems that scale to millions.</span>
+      </h1>
+      <p data-en="10+ years of experience shipping high-performance backend services across e-commerce, fintech and SaaS in Tokyo. Specialized in Java, Spring Cloud, microservices architecture and cloud-native infrastructure." data-zh="10 年以上经验，在东京交付电商、金融科技与 SaaS 领域的高性能后端服务。专注于 Java、Spring Cloud、微服务架构与云原生基础设施。">
+        10+ years of experience shipping high-performance backend services across e-commerce, fintech and SaaS in Tokyo. Specialized in Java, Spring Cloud, microservices architecture and cloud-native infrastructure.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary" data-en="Download CV (EN / 日本語)" data-zh="下载简历（中 / 英 / 日）">Download CV (EN / 日本語)</a>
+        <a href="#work" class="btn-secondary" data-en="See selected work" data-zh="查看精选作品">See selected work</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=1000&fit=crop&q=80" alt="Developer workspace" width="800" height="1000" loading="eager" />
+    </div>
+  </div>
+</section>
+
+<div class="stats reveal">
+  <div class="stat"><div class="stat-num">10+</div><div class="stat-label" data-en="Years in production Java" data-zh="生产环境 Java 年限">Years in production Java</div></div>
+  <div class="stat"><div class="stat-num">40+</div><div class="stat-label" data-en="Microservices shipped" data-zh="上线微服务数">Microservices shipped</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label" data-en="Products live in market" data-zh="在线运营产品">Products live in market</div></div>
+  <div class="stat"><div class="stat-num" data-en="JP · EN · 中文" data-zh="日 · 英 · 中">JP · EN · 中文</div><div class="stat-label" data-en="Working languages" data-zh="工作语言">Working languages</div></div>
+</div>
+
+<section class="trusted reveal" aria-label="Companies">
+  <p data-en="Trusted in production by teams at" data-zh="曾在以下团队的生产环境中服务">Trusted in production by teams at</p>
+  <div class="trusted-logos">
+    <a href="#" aria-label="Rakuten"><svg viewBox="0 0 24 24" role="img"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.4c5.302 0 9.6 4.298 9.6 9.6S17.302 21.6 12 21.6 2.4 17.302 2.4 12 6.698 2.4 12 2.4zm-1.08 4.8v9.6h2.16V7.2h-2.16zm4.32 0l-3.36 4.8 3.6 4.8h-2.52l-2.28-3.24-1.08 1.08v2.16H12.6V7.2h2.64z"/></svg></a>
+    <a href="#" aria-label="Mercari"><svg viewBox="0 0 24 24" role="img"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 1.8a8.2 8.2 0 110 16.4 8.2 8.2 0 010-16.4zm-2.4 4.2h4.8v1.8H9.6v6.6H7.8V8.4zm7.2 0v8.4h-1.8v-3h-2.4v3h-1.8V8.4h1.8v2.4h2.4V8.4h1.8z"/></svg></a>
+    <a href="#" aria-label="LINE"><svg viewBox="0 0 24 24" role="img"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.627.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+    <a href="#" aria-label="SoftBank"><svg viewBox="0 0 24 24" role="img"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l7.82 3.91L12 11.9 4.18 8.09 12 4.18zM4 9.27l7 3.5v7.46l-7-3.5V9.27zm9 10.96v-7.46l7-3.5v7.46l-7 3.5z"/></svg></a>
+    <a href="#" aria-label="NTT Data"><svg viewBox="0 0 24 24" role="img"><path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h5v2H8v-2z"/></svg></a>
+  </div>
+</section>
+
+<section class="section reveal" id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label" data-en="About" data-zh="关于我">About</div>
+      <h2 class="section-title" data-en="From Java 6 to Project Loom. I've shipped on every major release." data-zh="从 Java 6 到 Project Loom。每个主要版本我都在生产环境里交付过。">From Java 6 to Project Loom. I've shipped on every major release.</h2>
+      <p data-en="Based in Tokyo since 2018, I lead backend teams designing high-throughput payment and order systems for Japan and Southeast Asia. Before that I built recommendation engines and large-scale data pipelines at a Shanghai-based unicorn." data-zh="自 2018 年定居东京，主导后端团队为日本与东南亚市场设计高吞吐的支付与订单系统。来日本以前，曾在上海一家独角兽公司负责推荐引擎与大规模数据管道。">
+        Based in Tokyo since 2018, I lead backend teams designing high-throughput payment and order systems for Japan and Southeast Asia. Before that I built recommendation engines and large-scale data pipelines at a Shanghai-based unicorn.
+      </p>
+      <p data-en="I obsess over the quiet things that matter in production: clean domain boundaries, observability, graceful degradation, and writing the kind of code a stranger can confidently change at 3 a.m. I also publish a weekly newsletter on distributed systems that has 2,400+ subscribers." data-zh="我执着于生产环境里那些不起眼却要紧的事：清晰的领域边界、完整的可观测性、优雅的降级，以及写出陌生人凌晨三点也能放心修改的代码。同时维护一份分布式系统主题的周更 newsletter，订阅 2,400+。">
+        I obsess over the quiet things that matter in production: clean domain boundaries, observability, graceful degradation, and writing the kind of code a stranger can confidently change at 3 a.m. I also publish a weekly newsletter on distributed systems that has 2,400+ subscribers.
+      </p>
+      <p data-en="Currently exploring: virtual threads, GraalVM native image, OpenTelemetry, and event-driven CQRS with Kafka." data-zh="目前研究方向：虚拟线程、GraalVM Native Image、OpenTelemetry，以及基于 Kafka 的事件驱动 CQRS。">
+        Currently exploring: virtual threads, GraalVM native image, OpenTelemetry, and event-driven CQRS with Kafka.
+      </p>
+    </div>
+    <div class="about-card">
+      <h4 data-en="Quick facts" data-zh="基本信息">Quick facts</h4>
+      <ul>
+        <li><span data-en="Location" data-zh="所在地">Location</span><span data-en="Tokyo, Japan" data-zh="日本 · 东京">Tokyo, Japan</span></li>
+        <li><span data-en="Visa status" data-zh="在留资格">Visa status</span><span data-en="Highly Skilled Professional" data-zh="高度专门职">Highly Skilled Professional</span></li>
+        <li><span data-en="Years of experience" data-zh="工作年限">Years of experience</span><span data-en="10+" data-zh="10 年+">10+</span></li>
+        <li><span data-en="Open to" data-zh="接受形式">Open to</span><span data-en="Full-time / Contract" data-zh="正社员 / 业务委托">Full-time / Contract</span></li>
+        <li><span data-en="Time zone" data-zh="时区">Time zone</span><span>JST (UTC+9)</span></li>
+        <li><span data-en="English level" data-zh="英语水平">English level</span><span data-en="Business (CEFR C1)" data-zh="商务级（CEFR C1）">Business (CEFR C1)</span></li>
+        <li><span data-en="Japanese level" data-zh="日语水平">Japanese level</span><span data-en="JLPT N2, Business" data-zh="JLPT N2，商务级">JLPT N2, Business</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="work" style="padding-top: 24px;">
+  <div class="section-head">
+    <h2 class="section-title" data-en="Products I designed, built and still maintain." data-zh="由我设计、开发，并仍在持续维护的产品。">Products I designed, built and still maintain.</h2>
+    <p class="section-desc" data-en="Side projects and small commercial products built on weekends and evenings. Each one solves a real problem I had myself." data-zh="在周末与夜晚做出的独立产品与小型商业项目，每一个都源于我自己真实遇到的问题。">Side projects and small commercial products built on weekends and evenings. Each one solves a real problem I had myself.</p>
+  </div>
+  <div class="products-list">
+    <a class="product-row" href="#">
+      <div class="product-thumb">
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=560&h=350&fit=crop&q=80" alt="LedgerKit dashboard" width="560" height="350" loading="lazy" />
+      </div>
+      <div class="product-body">
+        <h3>LedgerKit</h3>
+        <div class="product-meta" data-en="2024 · Live · 1.2k MAU" data-zh="2024 · 在线运营 · 1.2k 月活">2024 · Live · 1.2k MAU</div>
+        <p data-en="An open-source double-entry accounting engine for SaaS startups. Provides immutable journals, multi-currency, and a typed Java API used by 30+ small teams." data-zh="面向 SaaS 创业团队的开源复式记账引擎。提供不可变流水、多币种与类型安全的 Java API，已被 30+ 团队接入生产环境。">An open-source double-entry accounting engine for SaaS startups. Provides immutable journals, multi-currency, and a typed Java API used by 30+ small teams.</p>
+        <div class="product-tech">
+          <span class="tech-pill">Java 21</span><span class="tech-pill">Spring Boot 3</span><span class="tech-pill">PostgreSQL</span><span class="tech-pill">Kafka</span>
+        </div>
+        <span class="product-link" data-en="View case study" data-zh="查看案例">View case study</span>
+      </div>
+    </a>
+    <a class="product-row reverse" href="#">
+      <div class="product-thumb">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=560&h=350&fit=crop&q=80" alt="FlowDeck analytics" width="560" height="350" loading="lazy" />
+      </div>
+      <div class="product-body">
+        <h3>FlowDeck</h3>
+        <div class="product-meta" data-en="2023 · Live · revenue-generating" data-zh="2023 · 在线运营 · 付费产品">2023 · Live · revenue-generating</div>
+        <p data-en="A self-hosted internal dashboard builder for engineering teams. Drag-and-drop widgets, SSO, and a no-code SQL query layer. Used internally by two Tokyo startups." data-zh="面向工程师团队的自部署内部看板生成器。拖拽组件、SSO、零代码 SQL 查询层，目前由两家东京创业公司付费使用。">A self-hosted internal dashboard builder for engineering teams. Drag-and-drop widgets, SSO, and a no-code SQL query layer. Used internally by two Tokyo startups.</p>
+        <div class="product-tech">
+          <span class="tech-pill">Spring Cloud</span><span class="tech-pill">React</span><span class="tech-pill">ClickHouse</span><span class="tech-pill">Docker</span>
+        </div>
+        <span class="product-link" data-en="View case study" data-zh="查看案例">View case study</span>
+      </div>
+    </a>
+    <a class="product-row" href="#">
+      <div class="product-thumb">
+        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=560&h=350&fit=crop&q=80" alt="NotaJP mobile app" width="560" height="350" loading="lazy" />
+      </div>
+      <div class="product-body">
+        <h3>NotaJP</h3>
+        <div class="product-meta" data-en="2022 · Live · 8.5k users" data-zh="2022 · 在线运营 · 8.5k 用户">2022 · Live · 8.5k users</div>
+        <p data-en="A vocabulary trainer for foreigners studying JLPT. Spaced repetition, JLPT level filters, mobile-first PWA. My most-loved side project, and the reason I learned Japanese." data-zh="面向 JLPT 备考者的日语单词训练 App。间隔重复、JLPT 等级筛选、移动优先的 PWA。我最喜欢的个人项目，也是我学日语的起点。">A vocabulary trainer for foreigners studying JLPT. Spaced repetition, JLPT level filters, mobile-first PWA. My most-loved side project, and the reason I learned Japanese.</p>
+        <div class="product-tech">
+          <span class="tech-pill">Quarkus</span><span class="tech-pill">GraalVM</span><span class="tech-pill">Vue 3</span><span class="tech-pill">Cloudflare</span>
+        </div>
+        <span class="product-link" data-en="View case study" data-zh="查看案例">View case study</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section reveal" id="writing">
+  <div class="section-head" style="display: flex; justify-content: space-between; align-items: end; max-width: 100%; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <h2 class="section-title" data-en="Recent essays on distributed systems." data-zh="最近写的几篇关于分布式系统的随笔。">Recent essays on distributed systems.</h2>
+    </div>
+    <a href="#" class="btn-secondary" data-en="All posts" data-zh="全部文章">All posts</a>
+  </div>
+  <div class="blog-list">
+    <a class="blog-item" href="#">
+      <span class="blog-date">2026 · 03 · 12</span>
+      <span class="blog-title" data-en="Virtual threads in production: 18 months later, what actually broke" data-zh="虚拟线程上生产 18 个月：实际踩过的那些坑">Virtual threads in production: 18 months later, what actually broke</span>
+      <span class="blog-cat">Java</span>
+    </a>
+    <a class="blog-item" href="#">
+      <span class="blog-date">2026 · 02 · 04</span>
+      <span class="blog-title" data-en="Designing idempotency keys for payment systems at Japanese scale" data-zh="为日本规模的支付系统设计幂等键">Designing idempotency keys for payment systems at Japanese scale</span>
+      <span class="blog-cat" data-en="Architecture" data-zh="架构">Architecture</span>
+    </a>
+    <a class="blog-item" href="#">
+      <span class="blog-date">2026 · 01 · 21</span>
+      <span class="blog-title" data-en="Why we moved from Spring Cloud Gateway back to Nginx (and back again)" data-zh="我们从 Spring Cloud Gateway 切回 Nginx，然后又切回来">Why we moved from Spring Cloud Gateway back to Nginx (and back again)</span>
+      <span class="blog-cat" data-en="Postmortem" data-zh="复盘">Postmortem</span>
+    </a>
+    <a class="blog-item" href="#">
+      <span class="blog-date">2025 · 12 · 02</span>
+      <span class="blog-title" data-en="A practical guide to OpenTelemetry tracing in a polyglot microservice stack" data-zh="多语言微服务中 OpenTelemetry 链路追踪实战指南">A practical guide to OpenTelemetry tracing in a polyglot microservice stack</span>
+      <span class="blog-cat" data-en="Observability" data-zh="可观测性">Observability</span>
+    </a>
+  </div>
+</section>
+
+<section class="section reveal" id="stack" style="padding-top: 24px; border-top: 1px solid var(--border);">
+  <h2 class="section-title" data-en="The tools I reach for." data-zh="我惯用的工具。">The tools I reach for.</h2>
+  <p class="section-desc" data-en="Curated, not exhaustive. These are the technologies I've used in production for at least 12 months." data-zh="精选而非穷举。下列技术我都在生产环境里使用过至少 12 个月。">Curated, not exhaustive. These are the technologies I've used in production for at least 12 months.</p>
+  <div class="skills-grid">
+    <div class="skill-col">
+      <h5 data-en="Languages" data-zh="编程语言">Languages</h5>
+      <ul>
+        <li>Java 8 / 17 / 21</li><li>Kotlin</li>
+        <li><span data-en="Go (read & ship)" data-zh="Go（可读写交付）">Go (read &amp; ship)</span></li>
+        <li>TypeScript</li><li>SQL / PL/pgSQL</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <h5 data-en="Backend" data-zh="后端">Backend</h5>
+      <ul>
+        <li>Spring Boot / Cloud</li><li>Quarkus · Micronaut</li><li>gRPC · GraphQL</li><li>Kafka · RabbitMQ</li><li>Redis · Elasticsearch</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <h5 data-en="Cloud & Infra" data-zh="云与基础设施">Cloud &amp; Infra</h5>
+      <ul>
+        <li>AWS (EKS, RDS, MSK)</li><li>GCP (GKE, BigQuery)</li><li>Kubernetes · Helm · ArgoCD</li><li>Terraform · Pulumi</li><li>OpenTelemetry · Datadog</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <h5 data-en="Practices" data-zh="工程实践">Practices</h5>
+      <ul>
+        <li><span data-en="Domain-Driven Design" data-zh="领域驱动设计 (DDD)">Domain-Driven Design</span></li>
+        <li><span data-en="Event-driven · CQRS" data-zh="事件驱动 · CQRS">Event-driven · CQRS</span></li>
+        <li><span data-en="SRE / on-call leadership" data-zh="SRE / on-call 体系搭建">SRE / on-call leadership</span></li>
+        <li><span data-en="Tech hiring & mentoring" data-zh="技术招聘 & 带新">Tech hiring &amp; mentoring</span></li>
+        <li><span data-en="Bilingual technical writing" data-zh="双语技术写作">Bilingual technical writing</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-wrap reveal">
+    <h2 data-en="Let's build something together." data-zh="一起做点什么吧。">Let's build something together.</h2>
+    <p data-en="Currently open to Senior / Staff Engineer roles in Tokyo, or fully-remote roles in EU / US time zones. Always happy to chat about distributed systems over coffee." data-zh="目前正在寻找东京的 Senior / Staff 工程师岗位，或欧美时区的全远程职位。也欢迎随时聊聊分布式系统，一杯咖啡的时间就好。">Currently open to Senior / Staff Engineer roles in Tokyo, or fully-remote roles in EU / US time zones. Always happy to chat about distributed systems over coffee.</p>
+    <div class="contact-actions">
+      <a class="btn-primary" href="mailto:jinsen@example.com">jinsen@example.com</a>
+      <a class="btn-secondary" href="#">LinkedIn</a>
+      <a class="btn-secondary" href="#">GitHub</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left" data-en="© 2026 Jinsen Wu · Built in Tokyo · Last updated March 2026" data-zh="© 2026 吴金森 · Built in Tokyo · 最近更新于 2026 年 3 月">© 2026 Jinsen Wu · Built in Tokyo · Last updated March 2026</div>
+    <div class="footer-right">
+      <a href="#">RSS</a>
+      <a data-set-lang="en">English</a>
+      <a data-set-lang="zh">中文</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var DEFAULT_LANG = 'en';
+  var SUPPORTED = ['en', 'zh'];
+  var TITLES = {
+    en: 'Jinsen Wu | Senior Java Engineer · Tokyo',
+    zh: '吴金森 | 资深 Java 工程师 · 东京'
+  };
+
+  function setLang(lang) {
+    if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT_LANG;
+    document.documentElement.setAttribute('lang', lang);
+    document.title = TITLES[lang];
+    var nodes = document.querySelectorAll('[data-en]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      var value = el.getAttribute('data-' + lang);
+      if (value === null) continue;
+      if (value.indexOf('<') !== -1) el.innerHTML = value;
+      else el.textContent = value;
+    }
+    var setters = document.querySelectorAll('[data-set-lang]');
+    for (var j = 0; j < setters.length; j++) {
+      var s = setters[j];
+      if (s.getAttribute('data-set-lang') === lang) s.classList.add('active');
+      else s.classList.remove('active');
+    }
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+  }
+
+  function detectInitial() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var urlLang = params.get('lang');
+      if (urlLang && SUPPORTED.indexOf(urlLang) !== -1) return urlLang;
+    } catch (e) {}
+    try {
+      var saved = localStorage.getItem('lang');
+      if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    if (nav.indexOf('zh') === 0) return 'zh';
+    return DEFAULT_LANG;
+  }
+
+  function initReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < els.length; i++) els[i].classList.add('visible');
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    for (var j = 0; j < els.length; j++) io.observe(els[j]);
+  }
+
+  function init() {
+    var setters = document.querySelectorAll('[data-set-lang]');
+    for (var i = 0; i < setters.length; i++) {
+      setters[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        setLang(this.getAttribute('data-set-lang'));
+      });
+    }
+    setLang(detectInitial());
+    initReveal();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
+</body>
+</html>
