@@ -8,8 +8,10 @@
 .env.*
 *.pem
 
-# resume (not published on site; keep local only)
+# resume (not published on site; keep local only — never commit)
 *.pdf
+**/resume.pdf
+吴锦森简历.pdf
 
 # OS / IDE
 .DS_Store
