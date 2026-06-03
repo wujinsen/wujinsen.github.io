@@ -140,6 +140,17 @@ input:focus-visible {
   gap: 14px;
 }
 
+.nav-compare {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.nav-compare:hover {
+  color: var(--text);
+}
+
 .lang-toggle {
   display: inline-flex;
   align-items: center;

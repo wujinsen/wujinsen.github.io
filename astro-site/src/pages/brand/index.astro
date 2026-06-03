@@ -1,0 +1,328 @@
+---
+import BrandLayout from '../../layouts/BrandLayout.astro';
+import I18n from '../../components/I18n.astro';
+import { site } from '../../data/site';
+import {
+  brandMeta,
+  brandStats,
+  brandFeatured,
+  brandTopics,
+  brandEssays,
+  brandBeliefs,
+  brandProjects,
+  brandPress,
+} from '../../data/brand';
+---
+
+<BrandLayout title={brandMeta.title.en} description={brandMeta.description.en}>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/brand/" class="logo">
+        <span class="logo-mark">W</span>
+        <I18n en={site.name.en} zh={site.name.zh} />
+        <span class="small">
+          <I18n en="· Writing & Building" zh="· 写作与构建" />
+        </span>
+      </a>
+      <div class="nav-links">
+        <a href="#essays"><I18n en="Essays" zh="文章" /></a>
+        <a href="#topics"><I18n en="Topics" zh="主题" /></a>
+        <a href="#building"><I18n en="Building" zh="作品" /></a>
+        <a href="#about"><I18n en="About" zh="关于" /></a>
+      </div>
+      <div class="nav-right">
+        <a href="/" class="nav-compare"><I18n en="Minimal ↗" zh="极简版 ↗" /></a>
+        <div class="lang-toggle" role="group" aria-label="Language switcher">
+          <button type="button" data-set-lang="en">EN</button>
+          <button type="button" data-set-lang="zh">中</button>
+        </div>
+        <a href="#subscribe" class="nav-cta"><I18n en="Read blog" zh="阅读博客" /></a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section class="hero reveal">
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-quote display">
+            <I18n en="I write about what production teaches you" zh="我在写：生产环境会教给你那些" />
+            <span class="markup">
+              <I18n en="when no one's watching." zh="没人在看时，才肯说的事。" />
+            </span>
+          </h1>
+          <p
+            class="hero-byline"
+            data-en="Fourteen years building Java backends in Beijing. Essays on microservices, data platforms, and release safety — on <b>moli-vuepress</b> and CNBlogs."
+            data-zh="十四年北京 Java 后端与架构经验。文章写在 <b>moli-vuepress</b> 与博客园，聊微服务、数据平台与发布安全。"
+          >
+            Fourteen years building Java backends in Beijing. Essays on microservices, data platforms, and release safety — on <b>moli-vuepress</b> and CNBlogs.
+          </p>
+          <a class="subscribe-link" href={site.blog} target="_blank" rel="noopener noreferrer">
+            <span class="subscribe-fake-input">wujinsen.github.io/moli-vuepress</span>
+            <span class="subscribe-fake-btn" data-en="Open blog" data-zh="打开博客">Open blog</span>
+          </a>
+          <div class="subscribe-meta">
+            <span
+              data-en="VuePress · CN / EN / JA · Also mirrored on <b>CNBlogs</b>"
+              data-zh="VuePress · 中 / 英 / 日 · <b>博客园</b>同步镜像"
+            >
+              VuePress · CN / EN / JA · Also mirrored on <b>CNBlogs</b>
+            </span>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <div class="hero-mark-inner">
+            <span class="hero-mark-letter">W</span>
+            <p class="hero-mark-caption">
+              <I18n
+                en="Java architect · Beijing · essays & side labs"
+                zh="Java 架构师 · 北京 · 文章与 side project"
+              />
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats reveal">
+      {
+        brandStats.map((stat) => (
+          <div class="stat">
+            <div class="stat-num">
+              {typeof stat.num === 'string' ? (
+                stat.num
+              ) : (
+                <I18n en={stat.num.en} zh={stat.num.zh} />
+              )}
+            </div>
+            <div class="stat-label">
+              <I18n en={stat.label.en} zh={stat.label.zh} />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <section class="section reveal">
+      <div class="section-eyebrow">
+        <span class="line"></span>
+        <span class="label"><I18n en="Featured essay" zh="本期推荐" /></span>
+      </div>
+      <h2 class="section-title">
+        <I18n en="The piece I'd want you to read first." zh="如果只读一篇，我希望你读这篇。" />
+      </h2>
+      <a class="featured" href={brandFeatured.href} target="_blank" rel="noopener noreferrer">
+        <div>
+          <div class="feat-tag">
+            <I18n en={brandFeatured.tag.en} zh={brandFeatured.tag.zh} />
+          </div>
+          <h3 class="feat-title display">
+            <I18n en={brandFeatured.title.en} zh={brandFeatured.title.zh} />
+          </h3>
+          <p class="feat-dek">
+            <I18n en={brandFeatured.dek.en} zh={brandFeatured.dek.zh} />
+          </p>
+          <div class="feat-byline">
+            {brandFeatured.byline.map((item) => (
+              <span><I18n en={item.en} zh={item.zh} /></span>
+            ))}
+          </div>
+        </div>
+        <div class="feat-right">
+          <div class="feat-pullquote display">
+            <I18n en={brandFeatured.quote.en} zh={brandFeatured.quote.zh} />
+          </div>
+          <div class="feat-pullquote-attrib">
+            <I18n en="from the blog" zh="摘自博客" />
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <section class="section reveal" id="topics" style="padding-top: 0;">
+      <h2 class="section-title">
+        <I18n
+          en="Three threads I keep coming back to."
+          zh="我会反复写到的三条线。"
+        />
+      </h2>
+      <div class="topics">
+        {
+          brandTopics.map((topic) => (
+            <div class:list={['topic-card', { featured: topic.featured }]}>
+              <div>
+                <h3 class="topic-name">
+                  <I18n en={topic.name.en} zh={topic.name.zh} />
+                </h3>
+                <p class="topic-desc">
+                  <I18n en={topic.desc.en} zh={topic.desc.zh} />
+                </p>
+                <span class="topic-meta">
+                  <I18n en={topic.meta.en} zh={topic.meta.zh} />
+                </span>
+              </div>
+              {topic.featured ? (
+                <div class="topic-visual">
+                  <span class="topic-visual-line"></span>
+                  <span class="topic-visual-label">Java · Beijing · production</span>
+                </div>
+              ) : null}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section reveal" id="essays" style="padding-top: 0;">
+      <h2 class="section-title">
+        <I18n en="Recent essays." zh="近期的几篇随笔。" />
+      </h2>
+      <div class="essay-list">
+        {
+          brandEssays.map((essay) => (
+            <a class="essay" href={essay.href} target="_blank" rel="noopener noreferrer">
+              <div class="essay-meta">
+                <span>{essay.date}</span>
+                <span><I18n en={essay.read.en} zh={essay.read.zh} /></span>
+              </div>
+              <div>
+                <div class="essay-cat">
+                  <I18n en={essay.cat.en} zh={essay.cat.zh} />
+                </div>
+                <h3 class="essay-title display">
+                  <I18n en={essay.title.en} zh={essay.title.zh} />
+                </h3>
+                <p class="essay-dek">
+                  <I18n en={essay.dek.en} zh={essay.dek.zh} />
+                </p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="manifesto-wrap reveal">
+      <div class="manifesto">
+        <h2 class="manifesto-title display">
+          <I18n
+            en="Three quiet convictions that show up in everything I write and ship."
+            zh="三件我安静地相信的事。它们出现在我写的每一篇文章，和每一行代码里。"
+          />
+        </h2>
+        <div class="manifesto-grid">
+          <div></div>
+          <div class="manifesto-list">
+            {
+              brandBeliefs.map((belief) => (
+                <div class="belief">
+                  <h5><I18n en={belief.title.en} zh={belief.title.zh} /></h5>
+                  <p><I18n en={belief.body.en} zh={belief.body.zh} /></p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" style="padding-top: 0;">
+      <div class="press-strip">
+        <div class="press-label"><I18n en="Find me on" zh="在这些地方找到我" /></div>
+        <div class="press-links">
+          {brandPress.map((item) => (
+            <a href={item.href} target="_blank" rel="noopener noreferrer">{item.label}</a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="building" style="padding-top: 24px;">
+      <h2 class="section-title">
+        <I18n en="Side projects that feed the writing." zh="为写作提供素材的 side projects。" />
+      </h2>
+      <p class="section-desc">
+        <I18n
+          en="Small labs kept alive on nights and weekends — each one material for something I later wrote about."
+          zh="几个在夜晚和周末活下来的小实验，每一个都是后来某篇文章的素材。"
+        />
+      </p>
+      <div class="build-scroll-wrap">
+        <div class="build-scroll">
+          {
+            brandProjects.map((project) => (
+              <a class="build" href={project.href} target="_blank" rel="noopener noreferrer">
+                <div class="build-mark">{project.mark}</div>
+                <h4>{project.name}</h4>
+                <p class="build-dek">
+                  <I18n en={project.dek.en} zh={project.dek.zh} />
+                </p>
+                <div class="build-stats">
+                  <I18n en={project.stats.en} zh={project.stats.zh} />
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="subscribe">
+      <div class="big-subscribe reveal">
+        <p class="big-sub-quote display">
+          <I18n
+            en="If this sounds like the kind of voice you'd read on a Sunday morning, the blog is where it lives."
+            zh="如果以上任何一段，听起来像是你愿意在周日早上读的那种声音，文章都在博客里。"
+          />
+        </p>
+        <div
+          class="big-sub-stats"
+          data-en="Essays on <b>VuePress</b> · mirror on <b>CNBlogs</b> · side lab <b>BioScope3D</b>"
+          data-zh="文章在 <b>VuePress</b> · <b>博客园</b>镜像 · 实验项目 <b>BioScope3D</b>"
+        >
+          Essays on <b>VuePress</b> · mirror on <b>CNBlogs</b> · side lab <b>BioScope3D</b>
+        </div>
+        <div class="big-sub-actions">
+          <a class="big-sub-btn primary" href={site.blog} target="_blank" rel="noopener noreferrer">
+            <I18n en="Open moli-vuepress" zh="打开 moli-vuepress" />
+          </a>
+          <a class="big-sub-btn secondary" href={`mailto:${site.email}`}>
+            <I18n en="Email me" zh="邮件联系" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="about">
+      <h2 class="section-title">
+        <I18n en="A one-paragraph bio, if you've made it this far." zh="读到这里，给你一段最简短的自我介绍。" />
+      </h2>
+      <p class="about-bio display">
+        <I18n
+          en="Wu Jinsen writes Java for a living and writes about Java in spare hours. Fourteen years shipping backends across e-commerce, fintech, and internal SaaS in Beijing — microservices, data warehouses, and teams that still deploy on Friday. He believes most of engineering is patience disguised as cleverness."
+          zh="吴锦森，工作日写 Java 谋生，业余写 Java 谋兴趣。十四年北京后端与架构经验，横跨电商、金融与内部 SaaS——微服务、数仓，以及周五仍敢发布的团队。他相信工程的大部分，是耐心伪装成的聪明。"
+        />
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="logo-mark">W</span>
+        <I18n
+          en="© 2026 Wu Jinsen · Beijing · Brand layout for comparison"
+          zh="© 2026 吴锦森 · 北京 · 品牌版（对比用）"
+        />
+      </div>
+      <div class="footer-right">
+        <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={site.blog} target="_blank" rel="noopener noreferrer">Blog</a>
+        <a href="/"><I18n en="Minimal site" zh="极简版" /></a>
+        <a data-set-lang="en">English</a>
+        <a data-set-lang="zh">中文</a>
+      </div>
+    </div>
+  </footer>
+</BrandLayout>
