@@ -11,7 +11,8 @@ export const site = {
   email: '2998714655@qq.com',
   github: 'https://github.com/wujinsen',
   url: 'https://wujinsen.github.io',
-  blog: 'https://wujinsen.github.io/wujinsen-blog',
+  blog: 'https://wujinsen.github.io/moli-vuepress',
+  blogPath: '/moli-vuepress',
   cnblogs: 'https://www.cnblogs.com/wujinsen',
   ogImage: 'https://wujinsen.github.io/og-cover.png',
 } as const;
@@ -31,7 +32,7 @@ export const quickFacts = [
   { key: { en: 'Years of experience', zh: '工作年限' }, value: { en: '14+', zh: '14 年+' } },
   { key: { en: 'Open to', zh: '接受形式' }, value: { en: 'Full-time / Contract', zh: '全职 / 业务委托' } },
   { key: { en: 'Education', zh: '学历' }, value: { en: 'B.S. Hainan University', zh: '海南大学 · 本科' } },
-  { key: { en: 'Blog', zh: '博客' }, value: { en: '/wujinsen-blog', zh: '/wujinsen-blog' }, href: site.blog },
+  { key: { en: 'Blog', zh: '博客' }, value: { en: '/moli-vuepress', zh: '/moli-vuepress' }, href: site.blog },
   { key: { en: 'GitHub', zh: 'GitHub' }, value: { en: 'github.com/wujinsen', zh: 'github.com/wujinsen' }, href: site.github },
 ] as const;
 
@@ -44,9 +45,25 @@ export type Product = {
   description: { en: string; zh: string };
   tech: string[];
   reverse?: boolean;
+  external?: boolean;
+  linkLabel?: { en: string; zh: string };
 };
 
 export const products: Product[] = [
+  {
+    name: 'BioScope3D',
+    href: 'https://wujinsen.github.io/bioscope3d/',
+    image: '',
+    imageAlt: 'BioScope3D 3D gallery',
+    meta: { en: 'Personal · 3D gallery · Live', zh: '个人项目 · 3D 画廊 · 已上线' },
+    description: {
+      en: 'Interactive 3D model gallery: cell biology, starships, robots, and planetary scenes. A side lab for WebGL exploration and immersive UI.',
+      zh: '交互式 3D 模型画廊：细胞生物、星舰、机器人与行星场景。个人实验项目，探索 WebGL 与沉浸式界面。',
+    },
+    tech: ['WebGL', 'Three.js', 'TypeScript'],
+    external: true,
+    linkLabel: { en: 'Open project', zh: '打开项目' },
+  },
   {
     name: '书山阅读',
     href: '#',

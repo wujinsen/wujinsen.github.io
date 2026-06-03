@@ -13,15 +13,19 @@ import { products } from '../data/site';
     </h2>
     <p class="section-desc">
       <I18n
-        en="Selected production work from recent roles: architecture calls, team leadership, and systems still running."
-        zh="来自近年工作的生产项目：架构决策、带队交付、以及仍在运行的系统。"
+        en="Production systems from recent roles, plus personal projects I ship and maintain."
+        zh="近年工作的生产系统，以及上线维护的个人项目。"
       />
     </p>
   </div>
   <div class="products-list">
     {
       products.map((product) => (
-        <a class:list={['product-row', { reverse: product.reverse }]} href={product.href}>
+        <a
+          class:list={['product-row', { reverse: product.reverse }]}
+          href={product.href}
+          {...(product.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
           <div class="product-thumb">
             {product.image ? (
               <img
@@ -49,7 +53,11 @@ import { products } from '../data/site';
               ))}
             </div>
             <span class="product-link">
-              <I18n en="View case study" zh="查看案例" />
+              {product.linkLabel ? (
+                <I18n en={product.linkLabel.en} zh={product.linkLabel.zh} />
+              ) : (
+                <I18n en="View case study" zh="查看案例" />
+              )}
             </span>
           </div>
         </a>
