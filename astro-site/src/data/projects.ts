@@ -87,7 +87,7 @@ export const sideProjects: SideProject[] = [
   },
   {
     title: { en: 'BioScope3D', zh: 'BioScope3D' },
-    href: 'https://wu-jinsen.com/bioscope3d/',
+    href: site.bioScope3d,
     mark: 'B',
     image: '/projects/bioscope3d-cover.svg',
     imageAlt: 'BioScope3D cell watercolor preview',

@@ -128,7 +128,7 @@ export const brandPress = [
   { label: 'CSDN', href: site.csdn },
   { label: 'WeChat', href: '/#blog' },
   { label: 'Tuchong', href: site.tuchong },
-  { label: 'BioScope3D', href: 'https://wu-jinsen.com/bioscope3d/' },
+  { label: 'BioScope3D', href: site.bioScope3d },
   { label: 'QuestionFlow', href: site.questionFlow },
   { label: 'Street Corner Food', href: site.streetCornerFood },
   { label: 'Moli CRM', href: site.moliCrm },
