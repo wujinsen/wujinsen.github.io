@@ -152,7 +152,7 @@ npm run preview  # 预览构建结果
 两个仓库**并存**：个人站占根路径，博客占 `/wujinsen-blog/` 子路径（GitHub Project Pages）。`#writing` 区为**外链**跳转博客，不内嵌。
 
 **部署个人站**：
-1. 推送 `main` 分支，GitHub Actions 自动构建 `astro-site` 并发布到 Pages
+1. 推送 `master` 分支，GitHub Actions 自动构建 `astro-site` 并发布到 Pages
 2. Settings → Pages → Source 选 **GitHub Actions**
 3. Settings → Pages → Custom domain 填 **`wu-jinsen.com`**，并勾选 Enforce HTTPS
 4. DNS：`www` CNAME → `wujinsen.github.io`；根域名 `@` 用 GitHub Pages 的 A 记录或 Cloudflare CNAME 拉平
