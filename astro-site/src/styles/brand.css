@@ -94,10 +94,11 @@ html[lang='zh'] body.brand-page {
   font-family: var(--display);
   font-weight: 500;
   font-style: italic;
-  font-size: clamp(2.25rem, 4.5vw, 4rem);
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  line-height: 1.12;
   letter-spacing: -0.02em;
   margin-bottom: 24px;
+  text-wrap: balance;
 }
 
 html[lang='zh'] .brand-page .hero-quote {
@@ -134,27 +135,14 @@ html[lang='zh'] .brand-page .hero-quote .markup {
 .brand-page .hero-mark-inner {
   width: 100%;
   aspect-ratio: 4/5;
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  background: linear-gradient(165deg, #fafafa 0%, #f0f0f1 55%, #ebebed 100%);
+  background: var(--bg-paper);
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 36px 32px;
-  position: relative;
-  overflow: hidden;
-}
-
-.brand-page .hero-mark-inner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 120px;
-  height: 120px;
-  background: rgba(193, 67, 46, 0.08);
-  border-radius: 0 0 0 100%;
 }
 
 .brand-page .hero-mark-letter {
@@ -173,56 +161,45 @@ html[lang='zh'] .brand-page .hero-quote .markup {
   line-height: 1.55;
 }
 
-.brand-page .subscribe-link {
+.brand-page .hero-actions {
   display: flex;
-  max-width: 480px;
-  background: var(--bg);
-  border: 1px solid var(--text);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
-.brand-page .subscribe-link:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(193, 67, 46, 0.12);
-}
-
-.brand-page .subscribe-fake-input {
-  flex: 1;
-  padding: 14px 18px;
-  font-size: 13px;
-  color: var(--text-muted);
-  font-family: var(--mono);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.brand-page .subscribe-fake-btn {
-  border-left: 1px solid var(--border);
+.brand-page .btn-brand-primary {
   background: var(--text);
   color: #fff;
-  padding: 14px 22px;
+  font-weight: 500;
   font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
+  padding: 11px 20px;
+  border-radius: 6px;
+  transition: background 0.15s;
 }
 
-.brand-page .subscribe-link:hover .subscribe-fake-btn {
+.brand-page .btn-brand-primary:hover {
   background: var(--accent);
 }
 
-.brand-page .subscribe-meta {
-  font-size: 12px;
-  color: var(--text-soft);
-  margin-top: 12px;
-  max-width: 480px;
+.brand-page .btn-brand-secondary {
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 11px 20px;
+  border-radius: 6px;
+  transition: border-color 0.15s;
 }
 
-.brand-page .subscribe-meta b {
-  color: var(--text);
-  font-weight: 600;
+.brand-page .btn-brand-secondary:hover {
+  border-color: var(--text);
+}
+
+.brand-page .hero-meta {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-family: var(--mono);
 }
 
 .brand-page .section-eyebrow {
@@ -259,6 +236,7 @@ html[lang='zh'] .brand-page .section-eyebrow .label {
   line-height: 1.15;
   margin-bottom: 14px;
   max-width: 760px;
+  text-wrap: balance;
 }
 
 html[lang='zh'] .brand-page .section-title {
@@ -269,14 +247,14 @@ html[lang='zh'] .brand-page .section-title {
 
 .brand-page .featured {
   background: var(--bg-paper);
-  border-radius: 24px;
-  padding: 56px;
+  border-radius: 16px;
+  padding: 48px;
   border: 1px solid var(--border);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  gap: 48px;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 28px;
   transition: border-color 0.2s;
 }
 
@@ -286,9 +264,9 @@ html[lang='zh'] .brand-page .section-title {
 
 .brand-page .feat-tag {
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text-muted);
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -331,31 +309,18 @@ html[lang='zh'] .brand-page .feat-title {
 .brand-page .feat-right {
   background: var(--text);
   color: #fff;
-  border-radius: 16px;
-  padding: 40px 36px;
+  border-radius: 12px;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  position: relative;
-}
-
-.brand-page .feat-right::before {
-  content: '"';
-  position: absolute;
-  top: 12px;
-  left: 22px;
-  font-family: var(--display);
-  font-size: 80px;
-  color: rgba(255, 255, 255, 0.18);
-  line-height: 1;
+  justify-content: center;
 }
 
 .brand-page .feat-pullquote {
   font-family: var(--display);
   font-style: italic;
-  font-size: 22px;
-  line-height: 1.5;
-  padding-top: 28px;
+  font-size: 20px;
+  line-height: 1.45;
 }
 
 html[lang='zh'] .brand-page .feat-pullquote {
@@ -385,10 +350,12 @@ html[lang='zh'] .brand-page .feat-pullquote {
   background: var(--bg);
 }
 
+.brand-page .feat-pullquote-attrib {
+  display: none;
+}
+
 .brand-page .topic-card:hover {
-  border-color: var(--text);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  border-color: #ccc;
 }
 
 .brand-page .topic-card.featured {
@@ -458,74 +425,72 @@ html[lang='zh'] .brand-page .topic-card.featured .topic-name {
   color: var(--text-soft);
 }
 
-.brand-page .essay-list {
+.brand-page .writing-links {
   display: flex;
   flex-direction: column;
-  margin-top: 48px;
-}
-
-.brand-page .essay {
-  padding: 28px 0 32px;
+  margin-top: 28px;
   border-top: 1px solid var(--border);
+}
+
+.brand-page .writing-row {
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 32px;
-  align-items: start;
-  transition: padding 0.2s;
-}
-
-.brand-page .essay:last-child {
+  grid-template-columns: 100px 1fr;
+  gap: 28px;
+  padding: 24px 0;
   border-bottom: 1px solid var(--border);
+  transition: padding-left 0.15s;
 }
 
-.brand-page .essay:hover {
-  padding-left: 8px;
+.brand-page .writing-row:hover {
+  padding-left: 6px;
 }
 
-.brand-page .essay:hover .essay-title {
+.brand-page .writing-row:hover .writing-title {
   color: var(--accent);
 }
 
-.brand-page .essay-cat {
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 8px;
+.brand-page .writing-row-static {
+  cursor: default;
 }
 
-.brand-page .essay-title {
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: 26px;
-  line-height: 1.25;
+.brand-page .writing-row-static:hover .writing-title {
+  color: inherit;
+}
+
+.brand-page .writing-source {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-soft);
+  padding-top: 4px;
+}
+
+.brand-page .writing-title {
+  font-size: 18px;
+  font-weight: 600;
   letter-spacing: -0.01em;
+  margin-bottom: 6px;
   transition: color 0.15s;
 }
 
-html[lang='zh'] .brand-page .essay-title {
-  font-family: var(--font), 'Noto Sans SC', sans-serif;
-  font-weight: 700;
-  line-height: 1.45;
-  font-size: 22px;
-  letter-spacing: 0;
-}
-
-.brand-page .essay-dek {
+.brand-page .writing-desc {
   font-size: 14px;
   color: var(--text-muted);
-  line-height: 1.65;
-  margin-top: 10px;
+  line-height: 1.6;
 }
 
-.brand-page .essay-meta {
-  font-size: 12px;
-  color: var(--text-soft);
-  font-family: var(--mono);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.brand-page .contact-band {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 36px;
+  background: var(--bg-soft);
+}
+
+.brand-page .about-bio {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #374151;
+  margin-top: 16px;
+  max-width: 720px;
 }
 
 .brand-page .manifesto-wrap {
@@ -616,158 +581,7 @@ html[lang='zh'] .brand-page .manifesto-title {
 }
 
 .brand-page .build-scroll-wrap {
-  margin: 40px -32px 0;
-  padding: 0 32px;
-}
-
-.brand-page .build-scroll {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
-  scrollbar-width: thin;
-}
-
-.brand-page .build {
-  flex: 0 0 min(300px, 82vw);
-  scroll-snap-align: start;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 26px 24px;
-  transition: border-color 0.2s, transform 0.2s;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-}
-
-.brand-page .build:hover {
-  border-color: var(--text);
-  transform: translateY(-2px);
-}
-
-.brand-page .build-mark {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-  background: var(--bg-paper);
-  display: grid;
-  place-items: center;
-  font-family: var(--display);
-  font-size: 2.5rem;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.brand-page .build h4 {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-bottom: 6px;
-}
-
-.brand-page .build-dek {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  flex: 1;
-  margin-bottom: 14px;
-}
-
-.brand-page .build-stats {
-  font-size: 12px;
-  color: var(--text-soft);
-  font-family: var(--mono);
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-}
-
-.brand-page .big-subscribe {
-  background: var(--bg-paper);
-  border-radius: 24px;
-  padding: 88px 56px;
-  text-align: center;
-  margin-top: 64px;
-  border: 1px solid var(--border);
-}
-
-.brand-page .big-sub-quote {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
-  line-height: 1.4;
-  max-width: 720px;
-  margin: 0 auto 28px;
-}
-
-html[lang='zh'] .brand-page .big-sub-quote {
-  font-family: var(--font), 'Noto Sans SC', sans-serif;
-  font-style: normal;
-  line-height: 1.7;
-  font-weight: 500;
-}
-
-.brand-page .big-sub-stats {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-}
-
-.brand-page .big-sub-stats b {
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.brand-page .big-sub-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.brand-page .big-sub-btn {
-  font-size: 14px;
-  font-weight: 600;
-  padding: 14px 24px;
-  border-radius: 10px;
-  transition: background 0.15s, transform 0.1s;
-}
-
-.brand-page .big-sub-btn.primary {
-  background: var(--text);
-  color: #fff;
-}
-
-.brand-page .big-sub-btn.primary:hover {
-  background: var(--accent);
-}
-
-.brand-page .big-sub-btn.secondary {
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-.brand-page .big-sub-btn.secondary:hover {
-  border-color: var(--text);
-}
-
-.brand-page .about-bio {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: 22px;
-  line-height: 1.55;
-  color: #374151;
-  margin-top: 24px;
-  max-width: 760px;
-}
-
-html[lang='zh'] .brand-page .about-bio {
-  font-family: var(--font), 'Noto Sans SC', sans-serif;
-  font-style: normal;
-  line-height: 1.75;
-  font-weight: 500;
+  margin-top: 40px;
 }
 
 .brand-page .footer-left .logo-mark {
@@ -805,7 +619,7 @@ html[lang='zh'] .brand-page .about-bio {
     grid-template-columns: 1fr;
   }
 
-  .brand-page .essay {
+  .brand-page .writing-row {
     grid-template-columns: 1fr;
     gap: 8px;
   }

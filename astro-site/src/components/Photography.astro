@@ -1,0 +1,12 @@
+---
+import I18n from './I18n.astro';
+import BuildCards from './BuildCards.astro';
+import { photoCards } from '../data/projects';
+---
+
+<section class="section reveal section-tight-top" id="photography">
+  <h2 class="section-title">
+    <I18n en="Photography" zh="摄影" />
+  </h2>
+  <BuildCards projects={photoCards} cardStyle="compact" />
+</section>

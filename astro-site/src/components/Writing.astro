@@ -1,39 +1,12 @@
 ---
 import I18n from './I18n.astro';
-import { site } from '../data/site';
+import BuildCards from './BuildCards.astro';
+import { blogCards } from '../data/projects';
 ---
 
-<section class="section reveal" id="writing">
-  <div class="section-head section-head-row">
-    <div>
-      <h2 class="section-title">
-        <I18n en="Writing" zh="文章" />
-      </h2>
-      <p class="section-desc" style="margin-top: 12px;">
-        <I18n
-          en="Technical essays live on my VuePress blog at wujinsen.github.io/moli-vuepress. This site links out; articles are not embedded here."
-          zh="技术文章发布在 VuePress 博客 wujinsen.github.io/moli-vuepress。本站仅提供外链入口，不内嵌博客内容。"
-        />
-      </p>
-    </div>
-    <a href={site.blog} class="btn-secondary" target="_blank" rel="noopener noreferrer">
-      <I18n en="Read the blog" zh="阅读博客" />
-    </a>
-  </div>
-  <div class="writing-links">
-    <a class="writing-card" href={site.blog} target="_blank" rel="noopener noreferrer">
-      <span class="writing-card-label">
-        <I18n en="Main blog" zh="主博客" />
-      </span>
-      <span class="writing-card-url">wujinsen.github.io/moli-vuepress</span>
-      <I18n en="Open blog" zh="打开博客" class="writing-card-cta" />
-    </a>
-    <a class="writing-card" href={site.cnblogs} target="_blank" rel="noopener noreferrer">
-      <span class="writing-card-label">
-        <I18n en="CNBlogs (mirror)" zh="博客园（镜像）" />
-      </span>
-      <span class="writing-card-url">cnblogs.com/wujinsen</span>
-      <I18n en="Open mirror" zh="打开镜像" class="writing-card-cta" />
-    </a>
-  </div>
+<section class="section reveal" id="blog">
+  <h2 class="section-title">
+    <I18n en="Blog" zh="博客" />
+  </h2>
+  <BuildCards projects={blogCards} layout="scroll" cardStyle="compact" gridVariant="blog" />
 </section>

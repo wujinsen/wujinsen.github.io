@@ -1,0 +1,26 @@
+---
+import I18n from './I18n.astro';
+import { quickFacts } from '../data/site';
+---
+
+<div class="about-card">
+  <h4><I18n en="Quick facts" zh="基本信息" /></h4>
+  <ul>
+    {
+      quickFacts.map((fact) => (
+        <li>
+          <I18n en={fact.key.en} zh={fact.key.zh} />
+          {fact.href ? (
+            <a href={fact.href} target="_blank" rel="noopener noreferrer">
+              <I18n en={fact.value.en} zh={fact.value.zh} />
+            </a>
+          ) : (
+            <span>
+              <I18n en={fact.value.en} zh={fact.value.zh} />
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</div>

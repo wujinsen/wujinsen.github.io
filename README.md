@@ -138,7 +138,7 @@ npm run preview  # 预览构建结果
 | `astro-site/src/styles/global.css` | v1-minimal 全套样式 |
 | `astro-site/public/resume.pdf` | 简历 PDF 下载 |
 
-**已接入真实信息**：吴锦森、北京、14 年经验、GitHub / 博客 / 邮箱、简历 PDF。
+**已接入真实信息**：吴锦森、14 年经验、GitHub / 博客 / 邮箱、简历 PDF。
 
 **保留能力**：EN / 中 双语切换（`?lang=zh` + localStorage）、scroll reveal、Path A 视觉。
 
@@ -146,17 +146,17 @@ npm run preview  # 预览构建结果
 
 | URL | 内容 | 仓库 |
 |-----|------|------|
-| `https://wujinsen.github.io/` | Astro 个人主页（本仓库 `astro-site`） | `wujinsen/wujinsen.github.io` |
-| `https://wujinsen.github.io/wujinsen-blog/` | 博客 | `wujinsen/wujinsen-blog` |
+| `https://wu-jinsen.com/` | Astro 个人主页（本仓库 `astro-site`） | `wujinsen/wujinsen.github.io` |
+| `https://wu-jinsen.com/moli-vuepress/` | 博客 | 同域子路径 |
 
 两个仓库**并存**：个人站占根路径，博客占 `/wujinsen-blog/` 子路径（GitHub Project Pages）。`#writing` 区为**外链**跳转博客，不内嵌。
 
 **部署个人站**：
-1. 将 `astro-site` 构建产物部署到 `wujinsen.github.io` 仓库根目录
+1. 推送 `main` 分支，GitHub Actions 自动构建 `astro-site` 并发布到 Pages
 2. Settings → Pages → Source 选 **GitHub Actions**
-3. 确保博客仓库 `wujinsen-blog` 已开启 Pages（来源为该仓库 main 分支）
-
-**博客仓库注意**：若博客使用 Jekyll/Hugo 等，需在博客项目里设置 `baseURL: /wujinsen-blog/`（或等价配置），否则静态资源路径会错。
+3. Settings → Pages → Custom domain 填 **`wu-jinsen.com`**，并勾选 Enforce HTTPS
+4. DNS：`www` CNAME → `wujinsen.github.io`；根域名 `@` 用 GitHub Pages 的 A 记录或 Cloudflare CNAME 拉平
+5. 构建产物含 `public/CNAME`（已配置为 `wu-jinsen.com`）
 
 HTML 原型仍保留在根目录（`v1-minimal.html` 等）供对照。
 

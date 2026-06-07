@@ -5,34 +5,57 @@ import { skillColumns } from '../data/site';
 function isI18nItem(item: string | { en: string; zh: string }): item is { en: string; zh: string } {
   return typeof item === 'object';
 }
+
+function splitSkillParts(text: string): string[] {
+  return text
+    .split(/\s*[·/]\s*/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
 ---
 
 <section class="section reveal section-stack" id="stack">
   <h2 class="section-title">
-    <I18n en="The tools I reach for." zh="我惯用的工具。" />
+    <I18n en="Stack" zh="技术栈" />
   </h2>
-  <p class="section-desc">
-    <I18n
-      en="Curated, not exhaustive. These are technologies I have used in production for substantial periods."
-      zh="精选而非穷举。下列技术我都在生产环境里长期使用过。"
-    />
-  </p>
-  <div class="skills-grid">
+
+  <div class="stack-matrix">
+    <div class="stack-layers" aria-hidden="true">
+      {
+        skillColumns.map((col) => (
+          <div class="stack-layer-slot">
+            <span class="stack-layer-chip" data-group={col.id}>
+              <I18n en={col.title.en} zh={col.title.zh} />
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="stack-cols">
     {
       skillColumns.map((col) => (
-        <div class="skill-col">
-          <h5>
+        <article class="stack-col" data-group={col.id} aria-label={col.title.zh}>
+          <h3 class="stack-col-title">
             <I18n en={col.title.en} zh={col.title.zh} />
-          </h5>
-          <ul>
-            {col.items.map((item) => (
-              <li>
-                {isI18nItem(item) ? <I18n en={item.en} zh={item.zh} /> : item}
-              </li>
-            ))}
-          </ul>
-        </div>
+          </h3>
+          <div class="stack-pills">
+            {col.items.flatMap((item) => {
+              if (isI18nItem(item)) {
+                return (
+                  <span class="stack-pill stack-pill--practice">
+                    <I18n en={item.en} zh={item.zh} />
+                  </span>
+                );
+              }
+              return splitSkillParts(item).map((part) => (
+                <span class="stack-pill">{part}</span>
+              ));
+            })}
+          </div>
+        </article>
       ))
     }
+    </div>
   </div>
 </section>

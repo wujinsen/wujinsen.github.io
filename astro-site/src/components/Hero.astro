@@ -1,45 +1,32 @@
 ---
 import I18n from './I18n.astro';
-import HeroCodePanel from './HeroCodePanel.astro';
-import { site } from '../data/site';
+import QuickFacts from './QuickFacts.astro';
 ---
 
 <section class="hero reveal">
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <div class="hero-tag">
-        <I18n
-          en="Java architect · Beijing · open to senior roles"
-          zh="Java 架构师 · 北京 · 开放 Senior 机会"
-        />
-      </div>
-      <h1>
-        <I18n en="Fourteen years in " zh="十四年 " />
-        <span class="accent">
-          <I18n en="production Java." zh="生产级 Java。" />
-        </span>
-        <I18n
-          en=" Microservices, data platforms, and teams that ship."
-          zh=" 微服务、数据平台，以及能交付的团队。"
-        />
-      </h1>
-      <p>
-        <I18n
-          en="I lead backend and platform work across e-commerce, fintech, and internal SaaS. Recent years: splitting monoliths, building Hive/Flink pipelines, and cutting release time on Jenkins."
-          zh="主导电商、金融与内部 SaaS 的后端与平台工作。近几年在做单体拆分、Hive/Flink 数据链路，以及 Jenkins 发布提速。"
-        />
-      </p>
-      <div class="hero-actions">
-        <a href={`mailto:${site.email}`} class="btn-primary">
-          <I18n en="Email me" zh="邮件联系" />
-        </a>
-        <a href="#work" class="btn-secondary">
-          <I18n en="Selected work" zh="精选项目" />
-        </a>
-      </div>
+  <div class="hero-copy">
+    <div class="hero-tag">
+      <I18n
+        en="Java architect · 14 years in"
+        zh="Java 架构师 · 十四年"
+      />
     </div>
-    <div class="hero-aside">
-      <HeroCodePanel />
-    </div>
+    <h1>
+      <I18n en="Fourteen years as a " zh="十四年" />
+      <span class="accent">
+        <I18n en="programmer." zh="程序员。" />
+      </span>
+      <I18n
+        en=" Microservices, data warehouses, teams I've led."
+        zh=" 微服务、数仓，也带过团队。"
+      />
+    </h1>
+    <p>
+      <I18n
+        en="Mostly internet backends—mobile apps, management systems, and SaaS—with platform and team lead roles along the way. Lately: internal architecture, legacy refactors, and breaking monoliths into services."
+        zh="主要在互联网企业做过后端和平台负责人——APP、各类管理系统与企业 SaaS 都写过。最近几年做内部系统架构、老项目重构，以及微服务拆分。"
+      />
+    </p>
   </div>
+  <QuickFacts />
 </section>

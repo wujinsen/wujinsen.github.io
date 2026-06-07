@@ -4,20 +4,12 @@ import { products } from '../data/site';
 ---
 
 <section class="section reveal section-tight-top" id="work">
-  <div class="section-head">
-    <h2 class="section-title">
-      <I18n
-        en="Projects I designed, built, and still maintain."
-        zh="由我设计、开发，并仍在持续维护的项目。"
-      />
-    </h2>
-    <p class="section-desc">
-      <I18n
-        en="Production systems from recent roles, plus personal projects I ship and maintain."
-        zh="近年工作的生产系统，以及上线维护的个人项目。"
-      />
-    </p>
-  </div>
+  <h2 class="section-title">
+    <I18n
+      en="Personal open-source projects."
+      zh="个人开源项目。"
+    />
+  </h2>
   <div class="products-list">
     {
       products.map((product) => (
@@ -52,13 +44,6 @@ import { products } from '../data/site';
                 <span class="tech-pill">{tech}</span>
               ))}
             </div>
-            <span class="product-link">
-              {product.linkLabel ? (
-                <I18n en={product.linkLabel.en} zh={product.linkLabel.zh} />
-              ) : (
-                <I18n en="View case study" zh="查看案例" />
-              )}
-            </span>
           </div>
         </a>
       ))

@@ -1,0 +1,109 @@
+---
+import I18n from './I18n.astro';
+import QrLightbox from './QrLightbox.astro';
+import type { SideProject } from '../data/projects';
+
+interface Props {
+  projects: readonly SideProject[];
+  layout?: 'scroll' | 'grid';
+  cardStyle?: 'default' | 'compact';
+  gridVariant?: 'default' | 'blog';
+}
+
+const { projects, layout = 'scroll', cardStyle = 'default', gridVariant = 'default' } = Astro.props;
+
+const gridWide = layout === 'grid' && projects.length >= 4;
+const gridTriple = layout === 'grid' && projects.length === 3;
+const hasQrExpand = projects.some((project) => project.qrExpand);
+---
+
+<div
+  class:list={[
+    'build-scroll-wrap',
+    {
+      'build-scroll-wrap-grid': layout === 'grid',
+      'build-scroll-wrap-grid-3': gridTriple,
+      'build-scroll-wrap-grid-4': gridWide,
+      'build-scroll-wrap-blog': gridVariant === 'blog',
+    },
+  ]}
+>
+  <div class="build-scroll">
+    {
+      projects.map((project) => {
+        const Tag = project.static || !project.href ? 'div' : 'a';
+        const linkProps =
+          Tag === 'a'
+            ? { href: project.href, target: '_blank', rel: 'noopener noreferrer' }
+            : {};
+
+        return (
+          <Tag
+            class:list={[
+              'build',
+              { 'build-compact': cardStyle === 'compact' },
+              { 'build-static': project.static || !project.href },
+            ]}
+            {...linkProps}
+          >
+            {
+              project.image && project.qrExpand ? (
+                <button
+                  type="button"
+                  class="build-qr-trigger"
+                  data-qr-src={project.image}
+                  data-qr-alt={project.imageAlt ?? project.title.en}
+                  data-aria-en="Enlarge WeChat QR code to scan"
+                  data-aria-zh="放大微信公众号二维码以便扫码"
+                  aria-label="Enlarge WeChat QR code to scan"
+                >
+                  <span class="build-qr-zoom" aria-hidden="true">
+                    <I18n en="Enlarge" zh="放大" />
+                  </span>
+                  <div class="build-mark build-mark-image build-mark-qr">
+                    <img
+                      src={project.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </button>
+              ) : project.image ? (
+                <div class="build-mark build-mark-image">
+                  <img
+                    src={project.image}
+                    alt={project.imageAlt ?? project.title.en}
+                    width={560}
+                    height={315}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ) : (
+                <div class="build-mark">{project.mark}</div>
+              )
+            }
+            <h4><I18n en={project.title.en} zh={project.title.zh} /></h4>
+            {
+              project.dek ? (
+                <p class="build-dek">
+                  <I18n en={project.dek.en} zh={project.dek.zh} />
+                </p>
+              ) : null
+            }
+            {
+              project.stats ? (
+                <div class="build-stats">
+                  <I18n en={project.stats.en} zh={project.stats.zh} />
+                </div>
+              ) : null
+            }
+          </Tag>
+        );
+      })
+    }
+  </div>
+</div>
+
+{hasQrExpand ? <QrLightbox /> : null}

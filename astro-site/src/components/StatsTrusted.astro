@@ -1,6 +1,6 @@
 ---
 import I18n from './I18n.astro';
-import { stats, trustedCompanies } from '../data/site';
+import { stats } from '../data/site';
 ---
 
 <div class="stats reveal">
@@ -21,14 +21,3 @@ import { stats, trustedCompanies } from '../data/site';
     ))
   }
 </div>
-
-<section class="trusted reveal" aria-label="Companies">
-  <p>
-    <I18n en="Trusted in production by teams at" zh="曾在以下团队的生产环境中服务" />
-  </p>
-  <div class="trusted-logos">
-    {trustedCompanies.map((name) => (
-      <span>{name}</span>
-    ))}
-  </div>
-</section>

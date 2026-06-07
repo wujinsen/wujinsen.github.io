@@ -1,59 +1,39 @@
 ---
 import I18n from './I18n.astro';
-import { quickFacts } from '../data/site';
 ---
 
 <section class="section reveal" id="about">
-  <div class="about-grid">
-    <div>
-      <div class="section-label">
-        <I18n en="About" zh="关于我" />
-      </div>
-      <h2 class="section-title">
-        <I18n
-          en="From monoliths to microservices to data platforms."
-          zh="从单体到微服务，再到数据平台。"
-        />
-      </h2>
-      <p>
-        <I18n
-          en="Based in Beijing with 14 years of Java experience. I have led teams at 马蜂窝, 自如, 阳光金科, and startups, designing high-throughput backend systems and company-wide data infrastructure."
-          zh="现居北京，14 年 Java 经验。曾在马蜂窝、自如、阳光金科及创业公司担任技术负责人，主导高吞吐后端系统与公司级数据基础设施建设。"
-        />
-      </p>
-      <p>
-        <I18n
-        en="I focus on production basics: service boundaries, observability, safe releases, and code the next engineer can change without fear. Essays at wujinsen.github.io/moli-vuepress."
-        zh="工作重心在生产基础能力：服务边界、可观测性、安全发布，以及后续同事能放心改动的代码。文章见 wujinsen.github.io/moli-vuepress。"
-        />
-      </p>
-      <p>
-        <I18n
-          en="Currently focused on: Spring Cloud microservices, Flink real-time pipelines, DevOps automation, and platform engineering."
-          zh="目前关注：Spring Cloud 微服务、Flink 实时链路、DevOps 自动化与平台工程。"
-        />
-      </p>
-    </div>
-    <div class="about-card">
-      <h4><I18n en="Quick facts" zh="基本信息" /></h4>
-      <ul>
-        {
-          quickFacts.map((fact) => (
-            <li>
-              <I18n en={fact.key.en} zh={fact.key.zh} />
-              {fact.href ? (
-                <a href={fact.href} target="_blank" rel="noopener noreferrer">
-                  <I18n en={fact.value.en} zh={fact.value.zh} />
-                </a>
-              ) : (
-                <span>
-                  <I18n en={fact.value.en} zh={fact.value.zh} />
-                </span>
-              )}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+  <div class="section-label">
+    <I18n en="About" zh="关于我" />
   </div>
+  <h2 class="section-title">
+    <I18n
+      en="From monoliths to microservices to data platforms."
+      zh="从单体到微服务，再到数据平台。"
+    />
+  </h2>
+  <p>
+    <I18n
+      en="Fourteen years as a programmer at internet companies—backend and platform lead across mobile apps, management systems, and SaaS; high-traffic systems and company-wide data platforms."
+      zh="十四年程序员，主要在互联网企业做后端和平台负责人——APP、各类管理系统与企业 SaaS 都做过，写过核心链路和高并发系统，也搭过公司级数仓。"
+    />
+  </p>
+  <p>
+    <I18n
+      en="I focus on evolvable architecture and engineering maturity—clear domain boundaries, end-to-end observability, and standardized release pipelines that keep delivery sustainable and technical debt manageable at scale."
+      zh="注重系统的可演进性与工程化建设：领域边界清晰、全链路可观测、发布灰度可回滚，保障业务快速迭代下的可持续交付与技术债可控。"
+    />
+  </p>
+  <p>
+    <I18n
+      en="Recent focus: enterprise architecture, refactors, microservices with Spring Cloud, and data pipelines shared across teams."
+      zh="最近几年：企业内部架构、项目重构、Spring Cloud 微服务，以及跨团队共用的数据链路。"
+    />
+  </p>
+  <p>
+    <I18n
+      en="I've also run ops solo on Alibaba Cloud and Tencent Cloud—Linux scripts, CI/CD, and getting things live."
+      zh="也曾一个人扛运维：阿里云、腾讯云，写脚本、跑 CI/CD、负责上线。"
+    />
+  </p>
 </section>

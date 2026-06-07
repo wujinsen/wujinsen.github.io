@@ -23,6 +23,11 @@ export function initSiteClient() {
       else el.classList.remove('active');
     });
 
+    document.querySelectorAll<HTMLElement>('[data-aria-en]').forEach((el) => {
+      const label = el.getAttribute(`data-aria-${lang}`);
+      if (label) el.setAttribute('aria-label', label);
+    });
+
     try {
       localStorage.setItem('lang', lang);
     } catch {
@@ -81,8 +86,31 @@ export function initSiteClient() {
     });
   });
 
+  function initQrLightbox() {
+    const dialog = document.getElementById('qr-lightbox') as HTMLDialogElement | null;
+    if (!dialog) return;
+
+    const img = dialog.querySelector<HTMLImageElement>('.qr-lightbox-img');
+    if (!img) return;
+
+    document.querySelectorAll<HTMLButtonElement>('.build-qr-trigger').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const src = trigger.dataset.qrSrc;
+        if (!src) return;
+        img.src = src;
+        img.alt = trigger.dataset.qrAlt || '';
+        dialog.showModal();
+      });
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+
   setLang(detectInitial());
   initReveal();
+  initQrLightbox();
 }
 
 initSiteClient();
