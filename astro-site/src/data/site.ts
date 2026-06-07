@@ -12,7 +12,7 @@ export const site = {
   github: 'https://github.com/wujinsen',
   url: 'https://wu-jinsen.com',
   blog: 'https://blog.wu-jinsen.com/',
-  questionFlow: 'https://wujinsen.github.io/QuestionFlow/',
+  questionFlow: 'https://questionflow.wu-jinsen.com/',
   streetCornerFood: 'https://scf.wu-jinsen.com/',
   moliCrm: 'https://moli-ui.wu-jinsen.com/',
   bioScope3d: 'https://bioscope3d.wu-jinsen.com/',
