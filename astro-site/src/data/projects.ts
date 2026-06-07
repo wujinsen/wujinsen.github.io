@@ -22,8 +22,8 @@ export const blogCards: SideProject[] = [
     image: '/photos/pikaqiu.jpg',
     imageAlt: 'Detective Pikachu',
     dek: {
-      en: 'VuePress · Markdown',
-      zh: 'VuePress · Markdown',
+      en: 'blog.wu-jinsen.com · VuePress',
+      zh: 'blog.wu-jinsen.com · VuePress',
     },
   },
   {
@@ -129,7 +129,7 @@ export const sideProjects: SideProject[] = [
       en: 'Built with VuePress; docs written in Markdown. CN / EN / JA.',
       zh: '基于 VuePress 构建，使用 Markdown 撰写文档。中 / 英 / 日。',
     },
-    stats: { en: 'Blog · moli-vuepress', zh: '博客 · moli-vuepress' },
+    stats: { en: 'Blog · blog.wu-jinsen.com', zh: '博客 · blog.wu-jinsen.com' },
   },
   {
     title: { en: 'CNBlogs', zh: 'CNBlogs' },

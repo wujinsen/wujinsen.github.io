@@ -30,7 +30,7 @@ export const brandFeatured = {
     zh: '十四年电商、金融与内部 SaaS 后端。权限边界、Jenkins 流水线，以及什么叫「真的做完」。',
   },
   byline: [
-    { en: 'moli-vuepress', zh: 'moli-vuepress' },
+    { en: 'blog.wu-jinsen.com', zh: 'blog.wu-jinsen.com' },
     { en: 'CNBlogs', zh: '博客园' },
     { en: 'CSDN', zh: 'CSDN' },
   ],
@@ -72,7 +72,7 @@ export const brandWritingLinks = [
   {
     href: site.blog,
     source: { en: 'VuePress', zh: 'VuePress' },
-    title: { en: 'moli-vuepress', zh: 'moli-vuepress' },
+    title: { en: 'blog.wu-jinsen.com', zh: 'blog.wu-jinsen.com' },
   },
   {
     href: site.cnblogs,
