@@ -131,5 +131,5 @@ export const brandPress = [
   { label: 'BioScope3D', href: site.bioScope3d },
   { label: 'QuestionFlow', href: site.questionFlow },
   { label: 'Street Corner Food', href: site.streetCornerFood },
-  { label: 'Moli CRM', href: site.moliCrm },
+  { label: '美玲系统', href: site.moliCrm },
 ] as const;

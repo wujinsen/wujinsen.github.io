@@ -42,6 +42,7 @@ export type Product = {
   href: string;
   image: string;
   imageAlt: string;
+  imageFit?: 'cover' | 'contain';
   meta: { en: string; zh: string };
   description: { en: string; zh: string };
   tech: string[];
@@ -51,14 +52,15 @@ export type Product = {
 
 export const products: Product[] = [
   {
-    name: '茉莉 CRM',
+    name: '美玲系统',
     href: site.moliCrm,
-    image: '/photos/moli-crm.jpg',
-    imageAlt: '茉莉 CRM 管理系统',
+    image: '/photos/meiling-system-logo.png',
+    imageAlt: '美玲系统 Logo',
+    imageFit: 'contain',
     meta: { en: 'Personal · CRM admin · Live', zh: '个人项目 · CRM 管理 · 已上线' },
     description: {
-      en: 'Moli-project-distribute is a distributed microservices stack built on RBAC and front/back separation—Spring Cloud and Spring Cloud Alibaba on the backend, with API gateway, service discovery and config, RPC/HTTP calls, auth, and persistence.',
-      zh: '茉莉项目微服务（moli-project-distribute）是一套基于 RBAC 权限系统设计，前后端分离，后端使用 Spring Cloud 全家桶 + Spring Cloud Alibaba 构建的分布式微服务项目，涵盖统一网关、服务注册与配置、RPC/HTTP 服务调用、权限认证、数据持久化等常见企业级能力。',
+      en: 'Meiling System (moli-project-distribute) is a distributed microservices stack built on RBAC and front/back separation—Spring Cloud and Spring Cloud Alibaba on the backend, with API gateway, service discovery and config, RPC/HTTP calls, auth, and persistence.',
+      zh: '美玲系统（moli-project-distribute）是一套基于 RBAC 权限系统设计，前后端分离，后端使用 Spring Cloud 全家桶 + Spring Cloud Alibaba 构建的分布式微服务项目，涵盖统一网关、服务注册与配置、RPC/HTTP 服务调用、权限认证、数据持久化等常见企业级能力。',
     },
     tech: ['Vue', 'Element UI', 'Spring Cloud', 'Spring Cloud Alibaba'],
     external: true,

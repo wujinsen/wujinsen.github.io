@@ -26,6 +26,7 @@ import { products } from '../data/site';
                 width="560"
                 height="350"
                 loading="lazy"
+                style={product.imageFit ? `object-fit: ${product.imageFit}` : undefined}
               />
             ) : (
               <div class="product-mark" aria-hidden="true">{product.name.slice(0, 1)}</div>

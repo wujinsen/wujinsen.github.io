@@ -74,14 +74,15 @@ export const photoCards: SideProject[] = [
 
 export const sideProjects: SideProject[] = [
   {
-    title: { en: 'Moli CRM', zh: '茉莉 CRM' },
+    title: { en: 'Meiling System', zh: '美玲系统' },
     href: site.moliCrm,
-    mark: 'C',
-    image: '/photos/moli-crm.jpg',
-    imageAlt: 'Moli CRM admin dashboard preview',
+    mark: '美',
+    image: '/photos/meiling-system-logo.png',
+    imageAlt: '美玲系统 Logo',
+    imageFit: 'contain',
     dek: {
       en: 'moli-project-distribute: RBAC microservices on Spring Cloud Alibaba.',
-      zh: '茉莉项目微服务（moli-project-distribute）：RBAC、Spring Cloud Alibaba 分布式微服务。',
+      zh: '美玲系统（moli-project-distribute）：RBAC、Spring Cloud Alibaba 分布式微服务。',
     },
     stats: { en: 'Personal · Live', zh: '个人项目 · 已上线' },
   },
